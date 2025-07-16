@@ -31,3 +31,5 @@ redis:
   poolSize: 10
   poolTimeout: 15
   idleCheckFrequency: 500
+cors:
+  allowOrigins: "*"

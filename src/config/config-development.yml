@@ -38,3 +38,5 @@ password:
   maxLength: 64
   includeUppercase: true
   includeLowercase: true
+cors:
+  allowOrigins: "*"  

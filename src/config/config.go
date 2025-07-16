@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"time"
+
 	"github.com/spf13/viper"
 )
 
@@ -12,6 +13,7 @@ type Config struct {
 	Server   ServerConfig
 	Postgres PostgresConfig
 	Redis    RedisConfig
+	Password PasswordConfig
 }
 
 type ServerConfig struct {
@@ -44,6 +46,15 @@ type RedisConfig struct {
 	IdleCheckFrequency time.Duration
 	PoolSize           int
 	PoolTimeout        time.Duration
+}
+
+type PasswordConfig struct {
+	IncludeChars     bool
+	IncludeDigits    bool
+	MinLength        int
+	MaxLength        int
+	IncludeUppercase bool
+	IncludeLowercase bool
 }
 
 func GetConfig() *Config {

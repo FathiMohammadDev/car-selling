@@ -9,16 +9,17 @@ import (
 	"github.com/go-playground/validator/v10"
 )
 
-func initServer() {
-	cfg := config.GetConfig()
+func initServer(cfg *config.Config) {
 	r := gin.New()
+	registerValidator()
+	r.Use(gin.Logger(), gin.Recovery(), middlewares.LimitByRequest(), middlewares.Cros(cfg))
 
+	v1 := r.Group("/api/v1/")
+}
+
+func registerValidator() {
 	val, ok := binding.Validator.Engine().(*validator.Validate)
 	if ok {
 		val.RegisterValidation("password", validations.PasswordValidator)
 	}
-	r.Use(gin.Logger(), gin.Recovery(), middlewares.LimitByRequest(), middlewares.Cros(cfg))
-
-	v1 := r.Group("/api/v1/")
-
 }

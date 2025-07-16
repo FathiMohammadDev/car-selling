@@ -8,8 +8,6 @@ logger:
   encoding: json
   level: debug
   logger: zap
-cors:
-  allowOrigins: "*"
 postgres:
   host: postgres_container
   port: 5432

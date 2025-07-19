@@ -9,11 +9,15 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 	"github.com/go-playground/validator/v10"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
+	"github.com/swaggo/swag/example/basic/docs"
 )
 
 func InitServer(cfg *config.Config) {
 	r := gin.New()
 	registerValidator()
+	RegisterSwagger(r, cfg)
 	r.Use(gin.Logger(), gin.Recovery(), middlewares.LimitByRequest(), middlewares.Cros(cfg))
 
 	v1 := r.Group("/api/v1/")
@@ -27,4 +31,15 @@ func registerValidator() {
 	if ok {
 		val.RegisterValidation("password", validations.PasswordValidator)
 	}
+}
+
+func RegisterSwagger(r *gin.Engine, cfg *config.Config) {
+	docs.SwaggerInfo.Title = "golang web api"
+	docs.SwaggerInfo.Description = "golang web api"
+	docs.SwaggerInfo.Version = "1.0"
+	docs.SwaggerInfo.BasePath = "/api"
+	docs.SwaggerInfo.Host = fmt.Sprintf("localhost:%s", cfg.Server.ExternalPort)
+	docs.SwaggerInfo.Schemes = []string{"http"}
+
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 }

@@ -1,6 +1,7 @@
 package cache
 
 import (
+	"context"
 	"fmt"
 	"time"
 
@@ -10,7 +11,7 @@ import (
 
 var redisClient *redis.Client
 
-func InitRedis(cfg *config.Config) {
+func InitRedis(cfg *config.Config) error {
 	redisClient = redis.NewClient(&redis.Options{
 		Addr:         fmt.Sprintf("%s:%s", cfg.Redis.Host, cfg.Redis.Port),
 		Password:     cfg.Redis.Password,
@@ -21,6 +22,11 @@ func InitRedis(cfg *config.Config) {
 		PoolSize:     cfg.Redis.PoolSize,
 		PoolTimeout:  cfg.Redis.PoolTimeout,
 	})
+	_, err := redisClient.Ping(context.Background()).Result()
+	if err != nil {
+		return err
+	}
+	return nil
 
 }
 

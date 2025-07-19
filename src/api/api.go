@@ -1,6 +1,8 @@
 package api
 
 import (
+	"fmt"
+
 	"github.com/FathiMohammadDev/car-selling/api/middlewares"
 	"github.com/FathiMohammadDev/car-selling/api/validations"
 	"github.com/FathiMohammadDev/car-selling/config"
@@ -9,12 +11,15 @@ import (
 	"github.com/go-playground/validator/v10"
 )
 
-func initServer(cfg *config.Config) {
+func InitServer(cfg *config.Config) {
 	r := gin.New()
 	registerValidator()
 	r.Use(gin.Logger(), gin.Recovery(), middlewares.LimitByRequest(), middlewares.Cros(cfg))
 
 	v1 := r.Group("/api/v1/")
+	v1.BasePath()
+	r.Run(fmt.Sprintf(":%s", cfg.Server.InternalPort))
+
 }
 
 func registerValidator() {

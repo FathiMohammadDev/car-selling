@@ -5,11 +5,13 @@ import (
 	"log"
 
 	"github.com/FathiMohammadDev/car-selling/config"
+	"github.com/FathiMohammadDev/car-selling/pkg/logging"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
 var dbClient *gorm.DB
+var logger = logging.NewLogger(config.GetConfig())
 
 func InitDb(cfg *config.Config) error {
 	cnn := fmt.Sprintf("host=%s port=%s user=%s password=123456 dbname=%s sslmode=%s TimeZone=Asia/Tehran",
@@ -33,6 +35,7 @@ func InitDb(cfg *config.Config) error {
 	sqlDb.SetMaxIdleConns(cfg.Postgres.MaxIdleConns)
 	sqlDb.SetConnMaxLifetime(cfg.Postgres.ConnMaxLifetime)
 
+	logger.Info(logging.Postgres, logging.Startup, "DB conected successfuly.", nil)
 	log.Println("DB conected successfuly.")
 
 	return nil

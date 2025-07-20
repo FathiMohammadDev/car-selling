@@ -4,7 +4,7 @@ server:
   runMode: release
   domain: localhost
 logger:
-  filePath: /app/logs/
+  filePath: ../logs/logs.log
   encoding: json
   level: debug
   logger: zap

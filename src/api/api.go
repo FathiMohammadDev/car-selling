@@ -18,6 +18,7 @@ func InitServer(cfg *config.Config) {
 	r := gin.New()
 	registerValidator()
 	RegisterSwagger(r, cfg)
+	r.Use(middlewares.DefaultStructurdLogger(cfg))
 	r.Use(gin.Logger(), gin.Recovery(), middlewares.LimitByRequest(), middlewares.Cros(cfg))
 
 	v1 := r.Group("/api/v1/")

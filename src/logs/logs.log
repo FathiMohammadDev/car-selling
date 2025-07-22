@@ -11,3 +11,5 @@
 {"level":"info","ts":"2025-07-22T12:06:02.805+0330","caller":"migrations/Init_1.go:29","msg":"tables created","Category":"Postgres","SubCategory":"Migration"}
 {"level":"info","ts":"2025-07-22T12:08:36.260+0330","caller":"db/postgres.go:38","msg":"DB conected successfuly.","Category":"Postgres","SubCategory":"Startup"}
 {"level":"info","ts":"2025-07-22T12:08:36.370+0330","caller":"migrations/Init_1.go:29","msg":"tables created","Category":"Postgres","SubCategory":"Migration"}
+{"level":"info","ts":"2025-07-22T17:53:45.570+0330","caller":"db/postgres.go:38","msg":"DB conected successfuly.","Category":"Postgres","SubCategory":"Startup"}
+{"level":"info","ts":"2025-07-22T17:53:45.844+0330","caller":"migrations/Init_1.go:38","msg":"tables created","Category":"Postgres","SubCategory":"Migration"}

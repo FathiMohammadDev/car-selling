@@ -3,3 +3,11 @@
 {"level":"info","ts":"2025-07-20T12:52:45.461+0330","caller":"db/postgres.go:38","msg":"DB conected successfuly.","Category":"Postgres","SubCategory":"Startup"}
 {"level":"fatal","ts":"2025-07-20T17:10:17.072+0330","caller":"cmd/main.go:18","msg":"dial tcp 127.0.0.1:6379: connect: connection refused","Category":"Redis","SubCategory":"Startup","stacktrace":"main.main\n\t/Users/dariush/Desktop/cars-api/src/cmd/main.go:18\nruntime.main\n\t/usr/local/go/src/runtime/proc.go:272"}
 {"level":"fatal","AppName":"MyApp","LoggerName":"Zerolog","Category":"Redis","SubCategory":"Startup","time":"2025-07-20T17:10:39+03:30","message":"dial tcp 127.0.0.1:6379: connect: connection refused"}
+{"level":"info","ts":"2025-07-22T11:52:40.257+0330","caller":"db/postgres.go:38","msg":"DB conected successfuly.","Category":"Postgres","SubCategory":"Startup"}
+{"level":"info","ts":"2025-07-22T11:52:40.634+0330","caller":"migrations/Init_1.go:29","msg":"tables created","Category":"Postgres","SubCategory":"Migration"}
+{"level":"info","ts":"2025-07-22T12:02:38.357+0330","caller":"db/postgres.go:38","msg":"DB conected successfuly.","Category":"Postgres","SubCategory":"Startup"}
+{"level":"info","ts":"2025-07-22T12:02:38.426+0330","caller":"migrations/Init_1.go:29","msg":"tables created","SubCategory":"Migration","Category":"Postgres"}
+{"level":"info","ts":"2025-07-22T12:06:02.752+0330","caller":"db/postgres.go:38","msg":"DB conected successfuly.","SubCategory":"Startup","Category":"Postgres"}
+{"level":"info","ts":"2025-07-22T12:06:02.805+0330","caller":"migrations/Init_1.go:29","msg":"tables created","Category":"Postgres","SubCategory":"Migration"}
+{"level":"info","ts":"2025-07-22T12:08:36.260+0330","caller":"db/postgres.go:38","msg":"DB conected successfuly.","Category":"Postgres","SubCategory":"Startup"}
+{"level":"info","ts":"2025-07-22T12:08:36.370+0330","caller":"migrations/Init_1.go:29","msg":"tables created","Category":"Postgres","SubCategory":"Migration"}

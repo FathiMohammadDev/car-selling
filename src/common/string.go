@@ -1,6 +1,8 @@
 package common
 
 import (
+	CryptoRand "crypto/rand"
+	"io"
 	"math/rand"
 	"strings"
 	"unicode"
@@ -75,6 +77,26 @@ func GeneratePassword() string {
 
 }
 
+func GenerateOtp() (string, error) {
+	cfg := config.GetConfig()
+	const digits = "0123456789"
+
+	var otp strings.Builder
+	otp.Grow(cfg.Otp.Digits)
+
+	buffer := make([]byte, cfg.Otp.Digits)
+
+	_, err := io.ReadFull(CryptoRand.Reader, buffer)
+	if err != nil {
+		return "", err
+	}
+
+	for _, b := range buffer {
+		otp.WriteByte(digits[int(b)%cfg.Otp.Digits])
+	}
+	return otp.String(), nil
+}
+
 func CheckPassword(password string) bool {
 	cfg := config.GetConfig()
 	if len(password) < cfg.Password.MinLength {
@@ -99,6 +121,7 @@ func CheckPassword(password string) bool {
 
 	return true
 }
+
 func HasUpper(s string) bool {
 	for _, r := range s {
 		if unicode.IsUpper(r) && unicode.IsLetter(r) {

@@ -16,6 +16,7 @@ type Config struct {
 	Password PasswordConfig
 	Cors     CorsConfig
 	Logger   LoggerConfig
+	Otp      OtpConfig
 }
 
 type ServerConfig struct {
@@ -67,7 +68,13 @@ type LoggerConfig struct {
 	FilePath string
 	Encoding string
 	Level    string
-	Logger string
+	Logger   string
+}
+
+type OtpConfig struct {
+	ExpireTime time.Duration
+	Digits     int
+	Limiter    time.Duration
 }
 
 func GetConfig() *Config {

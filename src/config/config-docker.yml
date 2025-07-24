@@ -31,3 +31,7 @@ redis:
   idleCheckFrequency: 500
 cors:
   allowOrigins: "*"
+otp:
+  expireTime: 120
+  digits: 6
+  limiter: 100

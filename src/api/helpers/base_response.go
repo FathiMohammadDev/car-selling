@@ -10,14 +10,14 @@ type BaseHttpResponse struct {
 	VlaidationErrors *[]validations.ValidationError
 }
 
-func generateBaseRes(result any, success bool, resultCode int) *BaseHttpResponse {
+func GenerateBaseRes(result any, success bool, resultCode int) *BaseHttpResponse {
 	return &BaseHttpResponse{
 		Result:     result,
 		ResultCode: resultCode,
 		Success:    success,
 	}
 }
-func generateBaseResWithErr(result any, success bool, resultCode int, err error) *BaseHttpResponse {
+func GenerateBaseResWithErr(result any, success bool, resultCode int, err error) *BaseHttpResponse {
 	return &BaseHttpResponse{
 		Result:     result,
 		ResultCode: resultCode,
@@ -25,7 +25,7 @@ func generateBaseResWithErr(result any, success bool, resultCode int, err error)
 		Error:      err.Error(),
 	}
 }
-func generateBaseResWithValidationError(result any, success bool, resultCode int, err error) *BaseHttpResponse {
+func GenerateBaseResWithValidationError(result any, success bool, resultCode int, err error) *BaseHttpResponse {
 	return &BaseHttpResponse{
 		Result:           result,
 		ResultCode:       resultCode,

@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/FathiMohammadDev/car-selling/api/middlewares"
+	"github.com/FathiMohammadDev/car-selling/api/routers"
 	"github.com/FathiMohammadDev/car-selling/api/validations"
 	"github.com/FathiMohammadDev/car-selling/config"
 	"github.com/gin-gonic/gin"
@@ -11,7 +12,7 @@ import (
 	"github.com/go-playground/validator/v10"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
-	"github.com/swaggo/swag/example/basic/docs"
+	"github.com/FathiMohammadDev/car-selling/docs"
 )
 
 func InitServer(cfg *config.Config) {
@@ -21,9 +22,19 @@ func InitServer(cfg *config.Config) {
 	r.Use(middlewares.DefaultStructurdLogger(cfg))
 	r.Use(gin.Logger(), gin.Recovery(), middlewares.LimitByRequest(), middlewares.Cros(cfg))
 
-	v1 := r.Group("/api/v1/")
-	v1.BasePath()
+	registerRoutes(r, cfg)
+
 	r.Run(fmt.Sprintf(":%s", cfg.Server.InternalPort))
+}
+
+func registerRoutes(r *gin.Engine, cfg *config.Config) {
+
+	v1 := r.Group("/api/v1/")
+	{
+		users := v1.Group("/users")
+
+		routers.Users(users, cfg)
+	}
 
 }
 

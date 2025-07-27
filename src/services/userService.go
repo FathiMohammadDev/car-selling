@@ -15,10 +15,11 @@ import (
 )
 
 type UserService struct {
-	cfg        *config.Config
-	database   *gorm.DB
-	logger     logging.Logger
-	otpService *OtpService
+	cfg          *config.Config
+	database     *gorm.DB
+	logger       logging.Logger
+	otpService   *OtpService
+	tokenService *TokenService
 }
 
 func NewUserService(cfg *config.Config) *UserService {
@@ -30,6 +31,7 @@ func NewUserService(cfg *config.Config) *UserService {
 		database,
 		logger,
 		NewOtpService(cfg),
+		NewTokenService(cfg),
 	}
 }
 
@@ -81,6 +83,42 @@ func (s *UserService) RegisterByUserName(req dto.RegisterUserByUsernameRequest) 
 	tx.Commit()
 
 	return nil
+}
+
+func (s *UserService) LoginByUserName(req dto.LoginByUsernameRequest) (*dto.TokenDetail, error) {
+	var user models.User
+
+	err := s.database.
+		Model(&models.User{}).
+		Where("username = ?", req.Username).
+		Preload("UserRoles", func(tx *gorm.DB) *gorm.DB {
+			return tx.Preload("Role")
+		}).
+		Find(&user).Error
+
+	if err != nil {
+		return nil, err
+	}
+
+	isCorect := common.ComparePassword(req.Password, user.Password)
+	if !isCorect {
+		return nil, errors.New("password is not corect")
+	}
+
+	tokenClaims := tokenDto{UserId: user.Id, FirstName: user.FirstName, LastName: user.LastName,
+		Email: user.Email, MobileNumber: user.MobileNumber}
+	if len(*user.UserRoles) > 0 {
+		for _, ur := range *user.UserRoles {
+			tokenClaims.Roles = append(tokenClaims.Roles, ur.Role.Name)
+		}
+	}
+
+	token, err := s.tokenService.GenerateToken(&tokenClaims)
+	if err != nil {
+		return nil, err
+	}
+	return token, nil
+
 }
 
 func (s *UserService) SendOtp(req dto.GetOtpRequest, ctx context.Context) error {

@@ -17,7 +17,7 @@ type TokenService struct {
 }
 
 type tokenDto struct {
-	UserId       string
+	UserId       int
 	FirstName    string
 	LastName     string
 	UserName     string
@@ -34,7 +34,7 @@ func NewTokenService(cfg *config.Config) *TokenService {
 	}
 }
 
-func (s *TokenService) GenerateToken(tokenClaims tokenDto) (*dto.TokenDetail, error) {
+func (s *TokenService) GenerateToken(tokenClaims *tokenDto) (*dto.TokenDetail, error) {
 	tokenDetails := &dto.TokenDetail{}
 	tokenDetails.AccessTokenExpireTime = time.Now().Add(s.cfg.JWT.AccessTokenExpireDuration * time.Minute).Unix()
 	tokenDetails.RefreshTokenExpireTime = time.Now().Add(s.cfg.JWT.RefreshTokenExpireDuration * time.Minute).Unix()

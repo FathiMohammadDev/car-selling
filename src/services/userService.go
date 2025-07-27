@@ -2,11 +2,14 @@ package services
 
 import (
 	"context"
+	"errors"
 
 	"github.com/FathiMohammadDev/car-selling/api/dto"
 	"github.com/FathiMohammadDev/car-selling/common"
 	"github.com/FathiMohammadDev/car-selling/config"
+	"github.com/FathiMohammadDev/car-selling/constants"
 	"github.com/FathiMohammadDev/car-selling/data/db"
+	"github.com/FathiMohammadDev/car-selling/data/models"
 	"github.com/FathiMohammadDev/car-selling/pkg/logging"
 	"gorm.io/gorm"
 )
@@ -30,6 +33,56 @@ func NewUserService(cfg *config.Config) *UserService {
 	}
 }
 
+func (s *UserService) RegisterByUserName(req dto.RegisterUserByUsernameRequest) error {
+	user := models.User{Username: req.Username, FirstName: req.FirstName, LastName: req.LastName, Email: req.Email, Password: req.Password}
+
+	exists, err := s.existByEmail(user.Email)
+	if err != nil {
+		return err
+	}
+	if exists {
+		return errors.New("email exists")
+	}
+
+	exists, err = s.existByUserName(user.Username)
+	if err != nil {
+		return err
+	}
+	if exists {
+		return errors.New("userName exists")
+	}
+
+	hashedPassword, err := common.HashPassword(user.Password)
+	if err != nil {
+		s.logger.Error(logging.General, logging.HashPassword, err.Error(), nil)
+		return err
+	}
+	user.Password = hashedPassword
+
+	roleId, err := s.getDefaultRole()
+	if err != nil {
+		s.logger.Error(logging.Postgres, logging.DefaultRoleNotFound, err.Error(), nil)
+		return err
+	}
+
+	tx := s.database.Begin()
+	err = tx.Create(&user).Error
+	if err != nil {
+		tx.Rollback()
+		s.logger.Error(logging.Postgres, logging.Rollback, err.Error(), nil)
+		return err
+	}
+	err = tx.Create(&models.UserRole{RoleId: roleId, UserId: user.Id}).Error
+	if err != nil {
+		tx.Rollback()
+		s.logger.Error(logging.Postgres, logging.Rollback, err.Error(), nil)
+		return err
+	}
+	tx.Commit()
+
+	return nil
+}
+
 func (s *UserService) SendOtp(req dto.GetOtpRequest, ctx context.Context) error {
 	otp, err := common.GenerateOtp()
 	if err != nil {
@@ -40,4 +93,51 @@ func (s *UserService) SendOtp(req dto.GetOtpRequest, ctx context.Context) error 
 		return err
 	}
 	return nil
+}
+
+func (s *UserService) existByEmail(email string) (bool, error) {
+	var exists bool
+	err := s.database.Model(&models.User{}).
+		Select("count(*) > 0").
+		Where("email = ?", email).
+		Find(&exists).Error
+	if err != nil {
+		return false, err
+	}
+	return exists, nil
+}
+
+func (s *UserService) existByMobileNum(mobileNum string) (bool, error) {
+	var exists bool
+	err := s.database.Model(&models.User{}).
+		Select("count(*) > 0").
+		Where("mobile_number = ?", mobileNum).
+		Find(&exists).Error
+	if err != nil {
+		return false, err
+	}
+	return exists, nil
+}
+
+func (s *UserService) existByUserName(userName string) (bool, error) {
+	var exists bool
+	err := s.database.Model(&models.User{}).
+		Select("count(*) > 0").
+		Where("username = ?", userName).
+		Find(&exists).Error
+	if err != nil {
+		return false, err
+	}
+	return exists, nil
+}
+
+func (s *UserService) getDefaultRole() (roleId int, err error) {
+	err = s.database.Model(&models.Role{}).
+		Select("id").
+		Where("name = ?", constants.DefaultRoleName).
+		Find(&roleId).Error
+	if err != nil {
+		return 0, err
+	}
+	return roleId, nil
 }

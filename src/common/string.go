@@ -8,6 +8,7 @@ import (
 	"unicode"
 
 	"github.com/FathiMohammadDev/car-selling/config"
+	"golang.org/x/crypto/bcrypt"
 )
 
 var (
@@ -17,6 +18,14 @@ var (
 	numberSet      = "0123456789"
 	allCharSet     = lowerCharSet + upperCharSet + specialCharSet + numberSet
 )
+
+func HashPassword(password string) (string, error) {
+	hashedBytes, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	if err != nil {
+		return "", err
+	}
+	return string(hashedBytes), nil
+}
 
 func GeneratePassword() string {
 	var generatedPassword strings.Builder

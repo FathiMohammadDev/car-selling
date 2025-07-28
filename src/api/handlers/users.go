@@ -39,3 +39,49 @@ func (h *UsersHandler) SendOtp(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusCreated, helpers.GenerateBaseRes(nil, true, 0))
 }
+
+// RegisterByUserName godoc
+// @Summary Registe user by userName
+// @Description Registe user by userName
+// @Tags Users
+// @Accept  json
+// @Produce  json
+// @Param Request body dto.RegisterUserByUsernameRequest true "RegisterUserByUsernameRequest"
+// @Router /v1/users/register-by-username [post]
+func (h *UsersHandler) RegisterByUserName(ctx *gin.Context) {
+	req := new(dto.RegisterUserByUsernameRequest)
+	err := ctx.ShouldBindJSON(req)
+	if err != nil {
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, helpers.GenerateBaseResWithValidationError(nil, false, 409, err))
+	}
+
+	err = h.service.RegisterByUserName(*req)
+	if err != nil {
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, helpers.GenerateBaseResWithErr(nil, false, 409, err))
+	}
+
+	ctx.JSON(http.StatusCreated, helpers.GenerateBaseRes(nil, true, 0))
+}
+
+// LoginByUserName godoc
+// @Summary Login user by userName
+// @Description Login user by userName
+// @Tags Users
+// @Accept  json
+// @Produce  json
+// @Param Request body dto.LoginByUsernameRequest true "LoginByUsernameRequest"
+// @Router /v1/users/login-by-username [post]
+func (h *UsersHandler) LoginByUserName(ctx *gin.Context) {
+	req := new(dto.LoginByUsernameRequest)
+	err := ctx.ShouldBindJSON(req)
+	if err != nil {
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, helpers.GenerateBaseResWithValidationError(nil, false, 409, err))
+	}
+
+	token, err := h.service.LoginByUserName(*req)
+	if err != nil {
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, helpers.GenerateBaseResWithErr(nil, false, 409, err))
+	}
+
+	ctx.JSON(http.StatusCreated, helpers.GenerateBaseRes(token, true, 0))
+}

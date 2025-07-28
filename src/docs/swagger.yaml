@@ -8,9 +8,80 @@ definitions:
     required:
     - mobileNumber
     type: object
+  dto.LoginByUsernameRequest:
+    properties:
+      password:
+        minLength: 6
+        type: string
+      username:
+        minLength: 5
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  dto.RegisterUserByUsernameRequest:
+    properties:
+      email:
+        minLength: 6
+        type: string
+      firstName:
+        minLength: 3
+        type: string
+      lastName:
+        minLength: 6
+        type: string
+      password:
+        minLength: 6
+        type: string
+      username:
+        minLength: 5
+        type: string
+    required:
+    - firstName
+    - lastName
+    - password
+    - username
+    type: object
 info:
   contact: {}
 paths:
+  /v1/users/login-by-username:
+    post:
+      consumes:
+      - application/json
+      description: Login user by userName
+      parameters:
+      - description: LoginByUsernameRequest
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.LoginByUsernameRequest'
+      produces:
+      - application/json
+      responses: {}
+      summary: Login user by userName
+      tags:
+      - Users
+  /v1/users/register-by-username:
+    post:
+      consumes:
+      - application/json
+      description: Registe user by userName
+      parameters:
+      - description: RegisterUserByUsernameRequest
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.RegisterUserByUsernameRequest'
+      produces:
+      - application/json
+      responses: {}
+      summary: Registe user by userName
+      tags:
+      - Users
   /v1/users/send-otp:
     post:
       consumes:

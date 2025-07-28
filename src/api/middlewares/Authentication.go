@@ -2,6 +2,7 @@ package middlewares
 
 import (
 	"errors"
+	"fmt"
 	"net/http"
 	"strings"
 
@@ -44,6 +45,37 @@ func Authentication(cfg *config.Config) gin.HandlerFunc {
 		ctx.Set(constants.ExpireTimeKey, claims[constants.ExpireTimeKey])
 
 		ctx.Next()
+
+	}
+}
+
+func Authorization(validRoles []string) gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		if len(ctx.Keys) == 0 {
+			ctx.AbortWithStatusJSON(http.StatusForbidden, helpers.GenerateBaseRes(
+				nil, false, -301,
+			))
+			return
+		}
+		rolesVal := ctx.Keys[constants.RolesKey]
+		fmt.Println(rolesVal)
+		if rolesVal == nil {
+			ctx.AbortWithStatusJSON(http.StatusForbidden, helpers.GenerateBaseRes(nil, false, -302))
+			return
+		}
+		roles := rolesVal.([]interface{})
+		val := map[string]int{}
+		for _, item := range roles {
+			val[item.(string)] = 0
+		}
+
+		for _, item := range validRoles {
+			if _, ok := val[item]; ok {
+				ctx.Next()
+				return
+			}
+		}
+		ctx.AbortWithStatusJSON(http.StatusForbidden, helpers.GenerateBaseRes(nil, false, -303))
 
 	}
 }

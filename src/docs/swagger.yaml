@@ -1,4 +1,13 @@
 definitions:
+  dto.CreateUpdateCountryReq:
+    properties:
+      name:
+        maxLength: 20
+        minLength: 3
+        type: string
+    required:
+    - name
+    type: object
   dto.GetOtpRequest:
     properties:
       mobileNumber:
@@ -46,6 +55,74 @@ definitions:
 info:
   contact: {}
 paths:
+  /v1/countries/:
+    post:
+      consumes:
+      - application/json
+      description: Create new country
+      parameters:
+      - description: CreateUpdateCountryReq
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateUpdateCountryReq'
+      produces:
+      - application/json
+      responses: {}
+      summary: Create new country
+      tags:
+      - Country
+  /v1/countries/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a country
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      summary: Delete a country
+      tags:
+      - Country
+    get:
+      consumes:
+      - application/json
+      description: Get a country
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      summary: Get a country
+      tags:
+      - Country
+    put:
+      consumes:
+      - application/json
+      description: Update country
+      parameters:
+      - description: CreateUpdateCountryReq
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateUpdateCountryReq'
+      produces:
+      - application/json
+      responses: {}
+      summary: Update country
+      tags:
+      - Country
   /v1/users/login-by-username:
     post:
       consumes:

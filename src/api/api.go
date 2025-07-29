@@ -7,12 +7,12 @@ import (
 	"github.com/FathiMohammadDev/car-selling/api/routers"
 	"github.com/FathiMohammadDev/car-selling/api/validations"
 	"github.com/FathiMohammadDev/car-selling/config"
+	"github.com/FathiMohammadDev/car-selling/docs"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 	"github.com/go-playground/validator/v10"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
-	"github.com/FathiMohammadDev/car-selling/docs"
 )
 
 func InitServer(cfg *config.Config) {
@@ -32,7 +32,9 @@ func registerRoutes(r *gin.Engine, cfg *config.Config) {
 	v1 := r.Group("/api/v1/")
 	{
 		users := v1.Group("/users")
+		country := v1.Group("/countries", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
 
+		routers.Country(country, cfg)
 		routers.Users(users, cfg)
 	}
 

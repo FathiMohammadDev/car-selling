@@ -29,6 +29,7 @@ func NewCountryHandler(cfg *config.Config) *CountryHandler {
 // @Produce  json
 // @Param Request body dto.CreateUpdateCountryReq true "CreateUpdateCountryReq"
 // @Router /v1/countries/ [post]
+// @Security AuthBearer
 func (h *CountryHandler) Create(ctx *gin.Context) {
 	req := dto.CreateUpdateCountryReq{}
 	err := ctx.ShouldBindJSON(&req)
@@ -57,6 +58,7 @@ func (h *CountryHandler) Create(ctx *gin.Context) {
 // @Produce  json
 // @Param Request body dto.CreateUpdateCountryReq true "CreateUpdateCountryReq"
 // @Router /v1/countries/{id} [put]
+// @Security AuthBearer
 func (h *CountryHandler) Update(ctx *gin.Context) {
 	id, _ := strconv.Atoi(ctx.Params.ByName("id"))
 	req := dto.CreateUpdateCountryReq{}
@@ -88,6 +90,7 @@ func (h *CountryHandler) Update(ctx *gin.Context) {
 // @Produce  json
 // @Param id path int true "Id"
 // @Router /v1/countries/{id} [delete]
+// @Security AuthBearer
 func (h *CountryHandler) Delete(ctx *gin.Context) {
 	id, _ := strconv.Atoi(ctx.Params.ByName("id"))
 
@@ -115,6 +118,7 @@ func (h *CountryHandler) Delete(ctx *gin.Context) {
 // @Produce  json
 // @Param id path int true "Id"
 // @Router /v1/countries/{id} [get]
+// @Security AuthBearer
 func (h *CountryHandler) GetById(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Params.ByName("id"))
 	if id == 0 {

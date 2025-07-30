@@ -172,7 +172,7 @@ func (s *UserService) existByUserName(userName string) (bool, error) {
 func (s *UserService) getDefaultRole() (roleId int, err error) {
 	err = s.database.Model(&models.Role{}).
 		Select("id").
-		Where("name = ?", constants.DefaultRoleName).
+		Where("name = ?", constants.AdminRoleName).
 		Find(&roleId).Error
 	if err != nil {
 		return 0, err

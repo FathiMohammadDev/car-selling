@@ -25,6 +25,7 @@ func Authentication(cfg *config.Config) gin.HandlerFunc {
 			err = errors.New("token is required")
 		} else {
 			token := strings.Split(auth, " ")
+			fmt.Println(token)
 			claims, err = service.GetClaims(token[1])
 		}
 
@@ -50,17 +51,15 @@ func Authentication(cfg *config.Config) gin.HandlerFunc {
 }
 
 func Authorization(validRoles []string) gin.HandlerFunc {
-	return func(ctx *gin.Context) {
-		if len(ctx.Keys) == 0 {
-			ctx.AbortWithStatusJSON(http.StatusForbidden, helpers.GenerateBaseRes(
-				nil, false, -301,
-			))
+	return func(c *gin.Context) {
+		if len(c.Keys) == 0 {
+			c.AbortWithStatusJSON(http.StatusForbidden, helpers.GenerateBaseRes(nil, false, -300))
 			return
 		}
-		rolesVal := ctx.Keys[constants.RolesKey]
+		rolesVal := c.Keys[constants.RolesKey]
 		fmt.Println(rolesVal)
 		if rolesVal == nil {
-			ctx.AbortWithStatusJSON(http.StatusForbidden, helpers.GenerateBaseRes(nil, false, -302))
+			c.AbortWithStatusJSON(http.StatusForbidden, helpers.GenerateBaseRes(nil, false, -301))
 			return
 		}
 		roles := rolesVal.([]interface{})
@@ -71,11 +70,11 @@ func Authorization(validRoles []string) gin.HandlerFunc {
 
 		for _, item := range validRoles {
 			if _, ok := val[item]; ok {
-				ctx.Next()
+				c.Next()
 				return
 			}
 		}
-		ctx.AbortWithStatusJSON(http.StatusForbidden, helpers.GenerateBaseRes(nil, false, -303))
-
+		fmt.Println(validRoles,roles,rolesVal)
+		c.AbortWithStatusJSON(http.StatusForbidden, helpers.GenerateBaseRes(nil, false, -301))
 	}
 }

@@ -6,6 +6,11 @@
     "paths": {
         "/v1/countries/": {
             "post": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
                 "description": "Create new country",
                 "consumes": [
                     "application/json"
@@ -33,6 +38,11 @@
         },
         "/v1/countries/{id}": {
             "get": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
                 "description": "Get a country",
                 "consumes": [
                     "application/json"
@@ -56,6 +66,11 @@
                 "responses": {}
             },
             "put": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
                 "description": "Update country",
                 "consumes": [
                     "application/json"
@@ -81,6 +96,11 @@
                 "responses": {}
             },
             "delete": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
                 "description": "Delete a country",
                 "consumes": [
                     "application/json"

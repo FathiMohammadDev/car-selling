@@ -17,6 +17,11 @@ const docTemplate = `{
     "paths": {
         "/v1/countries/": {
             "post": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
                 "description": "Create new country",
                 "consumes": [
                     "application/json"
@@ -44,6 +49,11 @@ const docTemplate = `{
         },
         "/v1/countries/{id}": {
             "get": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
                 "description": "Get a country",
                 "consumes": [
                     "application/json"
@@ -67,6 +77,11 @@ const docTemplate = `{
                 "responses": {}
             },
             "put": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
                 "description": "Update country",
                 "consumes": [
                     "application/json"
@@ -92,6 +107,11 @@ const docTemplate = `{
                 "responses": {}
             },
             "delete": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
                 "description": "Delete a country",
                 "consumes": [
                     "application/json"

@@ -70,6 +70,8 @@ paths:
       produces:
       - application/json
       responses: {}
+      security:
+      - AuthBearer: []
       summary: Create new country
       tags:
       - Country
@@ -87,6 +89,8 @@ paths:
       produces:
       - application/json
       responses: {}
+      security:
+      - AuthBearer: []
       summary: Delete a country
       tags:
       - Country
@@ -103,6 +107,8 @@ paths:
       produces:
       - application/json
       responses: {}
+      security:
+      - AuthBearer: []
       summary: Get a country
       tags:
       - Country
@@ -120,6 +126,8 @@ paths:
       produces:
       - application/json
       responses: {}
+      security:
+      - AuthBearer: []
       summary: Update country
       tags:
       - Country

@@ -4,8 +4,13 @@ import (
 	"context"
 	"database/sql"
 	"errors"
+	"fmt"
+	"math"
+	"reflect"
+	"strings"
 	"time"
 
+	"github.com/FathiMohammadDev/car-selling/api/dto"
 	"github.com/FathiMohammadDev/car-selling/common"
 	"github.com/FathiMohammadDev/car-selling/config"
 	"github.com/FathiMohammadDev/car-selling/constants"
@@ -17,12 +22,18 @@ import (
 type BaseService[T any, Tc any, Tu any, Tr any] struct {
 	Database *gorm.DB
 	Logger   logging.Logger
+	Preloads []preload
+}
+
+type preload struct {
+	Base  string
+	Inner []preload
 }
 
 func NewBaseService[T any, Tc any, Tu any, Tr any](cfg *config.Config) *BaseService[T, Tc, Tu, Tr] {
 	return &BaseService[T, Tc, Tu, Tr]{
-		db.GetDb(),
-		logging.NewLogger(cfg),
+		Database: db.GetDb(),
+		Logger:   logging.NewLogger(cfg),
 	}
 }
 
@@ -103,4 +114,132 @@ func (s *BaseService[T, Tc, Tu, Tr]) GetById(ctx context.Context, id int) (*Tr, 
 	}
 	return common.TypeConverter[Tr](model)
 }
- 
+
+func (s *BaseService[T, Tc, Tu, Tr]) GetByFilter(ctx context.Context, req *dto.PaginationInputWithFilter) (*dto.PagedList[Tr], error) {
+	return Paginate[T, Tr](req, s.Preloads, s.Database)
+}
+
+func NewPagedList[T any](items *[]T, count int64, pageNumber int, pageSize int64) *dto.PagedList[T] {
+	pl := &dto.PagedList[T]{
+		PageNumber: pageNumber,
+		TotalRows:  count,
+		Items:      items,
+	}
+	pl.TotalPages = int(math.Ceil(float64(count) / float64(pageSize)))
+	pl.HasNextPage = pl.PageNumber < pl.TotalPages
+	pl.HasPreviousPage = pl.PageNumber > 1
+
+	return pl
+}
+
+func Paginate[T any, Tr any](pagination *dto.PaginationInputWithFilter, preloads []preload, db *gorm.DB) (*dto.PagedList[Tr], error) {
+	model := new(T)
+	var items *[]T
+	var rItems *[]Tr
+	db = Preload(db, preloads)
+	query := getQuery[T](&pagination.DynamicFilter)
+	sort := getSort[T](&pagination.DynamicFilter)
+
+	var totalRows int64 = 0
+
+	db.
+		Model(model).
+		Where(query).
+		Count(&totalRows)
+
+	err := db.
+		Where(query).
+		Offset(pagination.GetOffset()).
+		Limit(pagination.GetPageSize()).
+		Order(sort).
+		Find(&items).
+		Error
+
+	if err != nil {
+		return nil, err
+	}
+	rItems, err = common.TypeConverter[[]Tr](items)
+	if err != nil {
+		return nil, err
+	}
+	return NewPagedList(rItems, totalRows, pagination.PageNumber, int64(pagination.PageSize)), err
+
+}
+
+func getQuery[T any](filter *dto.DynamicFilter) string {
+	t := new(T)
+	typeT := reflect.TypeOf(*t)
+	query := make([]string, 0)
+	query = append(query, "deleted_by is null")
+	if filter.Filter != nil {
+		for name, filter := range filter.Filter {
+			fld, ok := typeT.FieldByName(name)
+			if ok {
+				fld.Name = common.ToSnakeCase(fld.Name)
+				switch filter.Type {
+				case "contains":
+					query = append(query, fmt.Sprintf("%s ILike '%%%s%%'", fld.Name, filter.From))
+				case "notContains":
+					query = append(query, fmt.Sprintf("%s not ILike '%%%s%%'", fld.Name, filter.From))
+				case "startsWith":
+					query = append(query, fmt.Sprintf("%s ILike '%s%%'", fld.Name, filter.From))
+				case "endsWith":
+					query = append(query, fmt.Sprintf("%s ILike '%%%s'", fld.Name, filter.From))
+				case "equals":
+					query = append(query, fmt.Sprintf("%s = '%s'", fld.Name, filter.From))
+				case "notEqual":
+					query = append(query, fmt.Sprintf("%s != '%s'", fld.Name, filter.From))
+				case "lessThan":
+					query = append(query, fmt.Sprintf("%s < %s", fld.Name, filter.From))
+				case "lessThanOrEqual":
+					query = append(query, fmt.Sprintf("%s <= %s", fld.Name, filter.From))
+				case "greaterThan":
+					query = append(query, fmt.Sprintf("%s > %s", fld.Name, filter.From))
+				case "greaterThanOrEqual":
+					query = append(query, fmt.Sprintf("%s >= %s", fld.Name, filter.From))
+				case "inRange":
+					if fld.Type.Kind() == reflect.String {
+						query = append(query, fmt.Sprintf("%s >= '%s'", fld.Name, filter.From))
+						query = append(query, fmt.Sprintf("%s <= '%s'", fld.Name, filter.To))
+					} else {
+						query = append(query, fmt.Sprintf("%s >= %s", fld.Name, filter.From))
+						query = append(query, fmt.Sprintf("%s <= %s", fld.Name, filter.To))
+					}
+				}
+			}
+		}
+	}
+	return strings.Join(query, " AND ")
+}
+
+func getSort[T any](filter *dto.DynamicFilter) string {
+	t := new(T)
+	typeT := reflect.TypeOf(*t)
+	sort := make([]string, 0)
+	if filter.Sort != nil {
+		for _, tp := range *filter.Sort {
+			fld, ok := typeT.FieldByName(tp.ColId)
+			if ok && (tp.Sort == "asc" || tp.Sort == "desc") {
+				fld.Name = common.ToSnakeCase(fld.Name)
+				sort = append(sort, fmt.Sprintf("%s %s", fld.Name, tp.Sort))
+			}
+		}
+	}
+	return strings.Join(sort, ", ")
+}
+
+func Preload(db *gorm.DB, preloads []preload) *gorm.DB {
+	for _, item := range preloads {
+		if item.Base != "" {
+			if item.Inner != nil {
+				inner := func(db *gorm.DB) *gorm.DB {
+					return Preload(db, item.Inner)
+				}
+				db = db.Preload(item.Base, inner)
+			} else {
+				db = db.Preload(item.Base)
+			}
+		}
+	}
+	return db
+}

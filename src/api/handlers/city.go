@@ -1,11 +1,6 @@
 package handlers
 
 import (
-	"net/http"
-	"strconv"
-
-	"github.com/FathiMohammadDev/car-selling/api/dto"
-	"github.com/FathiMohammadDev/car-selling/api/helpers"
 	"github.com/FathiMohammadDev/car-selling/config"
 	"github.com/FathiMohammadDev/car-selling/services"
 	"github.com/gin-gonic/gin"
@@ -31,23 +26,7 @@ func NewCityHandler(cfg *config.Config) *CityHandler {
 // @Router /v1/cities/ [post]
 // @Security AuthBearer
 func (h *CityHandler) Create(ctx *gin.Context) {
-	req := dto.CreateCityReq{}
-	err := ctx.ShouldBindJSON(&req)
-	if err != nil {
-		ctx.AbortWithStatusJSON(http.StatusBadRequest, helpers.GenerateBaseResWithValidationError(
-			nil, false, 409, err,
-		))
-		return
-	}
-	res, err := h.service.Create(ctx, &req)
-	if err != nil {
-		ctx.AbortWithStatusJSON(http.StatusBadRequest, helpers.GenerateBaseResWithErr(
-			nil, false, 409, err,
-		))
-		return
-	}
-
-	ctx.JSON(http.StatusCreated, helpers.GenerateBaseRes(res, true, 0))
+	Create(ctx, h.service.Create)
 }
 
 // CreateCity godoc
@@ -60,26 +39,7 @@ func (h *CityHandler) Create(ctx *gin.Context) {
 // @Router /v1/cities/ [put]
 // @Security AuthBearer
 func (h *CityHandler) Update(ctx *gin.Context) {
-	id, _ := strconv.Atoi(ctx.Params.ByName("id"))
-	req := dto.UpdateCityReq{}
-
-	err := ctx.ShouldBindJSON(&req)
-	if err != nil {
-		ctx.AbortWithStatusJSON(http.StatusBadRequest, helpers.GenerateBaseResWithValidationError(
-			nil, false, 409, err,
-		))
-		return
-	}
-
-	res, err := h.service.Update(ctx, id, &req)
-	if err != nil {
-		ctx.AbortWithStatusJSON(http.StatusBadRequest, helpers.GenerateBaseResWithErr(
-			nil, false, 409, err,
-		))
-		return
-	}
-
-	ctx.JSON(http.StatusCreated, helpers.GenerateBaseRes(res, true, 0))
+	Update(ctx, h.service.Update)
 }
 
 // DeleteCity godoc
@@ -92,21 +52,7 @@ func (h *CityHandler) Update(ctx *gin.Context) {
 // @Router /v1/cities/ [delete]
 // @Security AuthBearer
 func (h *CityHandler) Delete(ctx *gin.Context) {
-	id, _ := strconv.Atoi(ctx.Params.ByName("id"))
-
-	if id == 0 {
-		ctx.AbortWithStatusJSON(http.StatusNotFound,
-			helpers.GenerateBaseRes(nil, false, 121))
-		return
-	}
-
-	err := h.service.Delete(ctx, id)
-	if err != nil {
-		ctx.AbortWithStatusJSON(http.StatusBadRequest,
-			helpers.GenerateBaseResWithErr(nil, false, 121, err))
-		return
-	}
-	ctx.JSON(http.StatusOK, helpers.GenerateBaseRes(nil, true, 0))
+	Delete(ctx, h.service.Delete)
 
 }
 
@@ -119,19 +65,6 @@ func (h *CityHandler) Delete(ctx *gin.Context) {
 // @Param id path int true "Id"
 // @Router /v1/cities/{id} [get]
 // @Security AuthBearer
-func (h *CityHandler) GetById(c *gin.Context) {
-	id, _ := strconv.Atoi(c.Params.ByName("id"))
-	if id == 0 {
-		c.AbortWithStatusJSON(http.StatusNotFound,
-			helpers.GenerateBaseRes(nil, false, 121))
-		return
-	}
-
-	res, err := h.service.GetById(c, id)
-	if err != nil {
-		c.AbortWithStatusJSON(http.StatusBadRequest,
-			helpers.GenerateBaseResWithErr(nil, false, 121, err))
-		return
-	}
-	c.JSON(http.StatusOK, helpers.GenerateBaseRes(res, true, 0))
+func (h *CityHandler) GetById(ctx *gin.Context) {
+	GetById(ctx, h.service.GetById)
 }

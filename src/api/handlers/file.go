@@ -22,8 +22,6 @@ type FileHandler struct {
 	service *services.FileService
 }
 
-var logger = logging.NewLogger(config.GetConfig())
-
 func NewFileHandler(cfg *config.Config) *FileHandler {
 	return &FileHandler{
 		service: services.NewFileService(cfg),

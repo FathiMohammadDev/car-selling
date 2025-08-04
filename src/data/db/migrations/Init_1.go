@@ -23,12 +23,14 @@ func Up1() {
 func CreateTables(database *gorm.DB) {
 	tables := []interface{}{}
 
+	file := models.File{}
 	country := models.Country{}
 	city := models.City{}
 	user := models.User{}
 	role := models.Role{}
 	userRole := models.UserRole{}
 
+	tables = addNewTable(database, file, tables)
 	tables = addNewTable(database, country, tables)
 	tables = addNewTable(database, city, tables)
 	tables = addNewTable(database, user, tables)

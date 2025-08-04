@@ -1,6 +1,7 @@
 package migrations
 
 import (
+
 	"github.com/FathiMohammadDev/car-selling/config"
 	"github.com/FathiMohammadDev/car-selling/constants"
 	"github.com/FathiMohammadDev/car-selling/data/db"
@@ -27,6 +28,8 @@ func Up1() {
 func CreateTables(database *gorm.DB) {
 	tables := []interface{}{}
 
+	property := models.Property{}
+	PropertyCategory := models.PropertyCategory{}
 	file := models.File{}
 	country := models.Country{}
 	city := models.City{}
@@ -34,6 +37,8 @@ func CreateTables(database *gorm.DB) {
 	role := models.Role{}
 	userRole := models.UserRole{}
 
+	tables = addNewTable(database, PropertyCategory, tables)
+	tables = addNewTable(database, property, tables)
 	tables = addNewTable(database, file, tables)
 	tables = addNewTable(database, country, tables)
 	tables = addNewTable(database, city, tables)

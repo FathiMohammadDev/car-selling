@@ -73,6 +73,11 @@ definitions:
         minLength: 3
         type: string
     type: object
+  dto.UpdateFileRequest:
+    properties:
+      description:
+        type: string
+    type: object
 info:
   contact: {}
 paths:
@@ -228,6 +233,82 @@ paths:
       summary: Update country
       tags:
       - Country
+  /v1/files/:
+    post:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: Create a file
+      parameters:
+      - in: formData
+        name: description
+        required: true
+        type: string
+      - description: Create a file
+        in: formData
+        name: file
+        required: true
+        type: file
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: Create a file
+      tags:
+      - Files
+  /v1/files/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a file
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: Delete a file
+      tags:
+      - Files
+    get:
+      consumes:
+      - application/json
+      description: Get a file
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: Get a file
+      tags:
+      - Files
+    put:
+      consumes:
+      - application/json
+      description: Update a file
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Update a file
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UpdateFileRequest'
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: Update a file
+      tags:
+      - Files
   /v1/users/login-by-username:
     post:
       consumes:

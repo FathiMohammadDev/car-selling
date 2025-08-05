@@ -11,6 +11,42 @@ definitions:
     - countryId
     - name
     type: object
+  dto.CreatePropertyCategoryRequest:
+    properties:
+      icon:
+        maxLength: 1000
+        type: string
+      name:
+        maxLength: 50
+        minLength: 3
+        type: string
+    required:
+    - name
+    type: object
+  dto.CreatePropertyRequest:
+    properties:
+      categoryId:
+        type: integer
+      dataType:
+        maxLength: 15
+        type: string
+      description:
+        maxLength: 1000
+        type: string
+      icon:
+        maxLength: 1000
+        type: string
+      name:
+        maxLength: 50
+        minLength: 3
+        type: string
+      unit:
+        maxLength: 15
+        type: string
+    required:
+    - categoryId
+    - name
+    type: object
   dto.CreateUpdateCountryReq:
     properties:
       name:
@@ -78,28 +114,36 @@ definitions:
       description:
         type: string
     type: object
+  dto.UpdatePropertyCategoryRequest:
+    properties:
+      icon:
+        type: string
+      name:
+        type: string
+    type: object
+  dto.UpdatePropertyRequest:
+    properties:
+      categoryId:
+        type: integer
+      dataType:
+        maxLength: 15
+        type: string
+      description:
+        maxLength: 1000
+        type: string
+      icon:
+        maxLength: 1000
+        type: string
+      name:
+        type: string
+      unit:
+        maxLength: 15
+        type: string
+    type: object
 info:
   contact: {}
 paths:
   /v1/cities/:
-    delete:
-      consumes:
-      - application/json
-      description: delete city
-      parameters:
-      - description: Id
-        in: path
-        name: id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses: {}
-      security:
-      - AuthBearer: []
-      summary: delete city
-      tags:
-      - City
     post:
       consumes:
       - application/json
@@ -119,26 +163,25 @@ paths:
       summary: Create new city
       tags:
       - City
-    put:
+  /v1/cities/{id}:
+    delete:
       consumes:
       - application/json
-      description: Update city
+      description: delete city
       parameters:
-      - description: UpdateCityReq
-        in: body
-        name: Request
+      - description: Id
+        in: path
+        name: id
         required: true
-        schema:
-          $ref: '#/definitions/dto.UpdateCityReq'
+        type: integer
       produces:
       - application/json
       responses: {}
       security:
       - AuthBearer: []
-      summary: Update city
+      summary: delete city
       tags:
       - City
-  /v1/cities/{id}:
     get:
       consumes:
       - application/json
@@ -155,6 +198,30 @@ paths:
       security:
       - AuthBearer: []
       summary: Get a city
+      tags:
+      - City
+    put:
+      consumes:
+      - application/json
+      description: Update city
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: UpdateCityReq
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UpdateCityReq'
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: Update city
       tags:
       - City
   /v1/countries/:
@@ -219,6 +286,11 @@ paths:
       - application/json
       description: Update country
       parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
       - description: CreateUpdateCountryReq
         in: body
         name: Request
@@ -309,6 +381,172 @@ paths:
       summary: Update a file
       tags:
       - Files
+  /v1/property-category/:
+    post:
+      consumes:
+      - application/json
+      description: Create new PropertyCategory
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: CreatePropertyCategoryRequest
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreatePropertyCategoryRequest'
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: Create new PropertyCategory
+      tags:
+      - PropertyCategory
+  /v1/property-category/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete new PropertyCategory
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: Delete new PropertyCategory
+      tags:
+      - PropertyCategory
+    get:
+      consumes:
+      - application/json
+      description: Get new PropertyCategory
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: Get new PropertyCategory
+      tags:
+      - PropertyCategory
+    put:
+      consumes:
+      - application/json
+      description: Update new PropertyCategory
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: UpdatePropertyCategoryRequest
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UpdatePropertyCategoryRequest'
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: Update new PropertyCategory
+      tags:
+      - PropertyCategory
+  /v1/property/:
+    delete:
+      consumes:
+      - application/json
+      description: Delete new Property
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: Delete new Property
+      tags:
+      - Property
+    get:
+      consumes:
+      - application/json
+      description: Get new Property
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: Get new Property
+      tags:
+      - Property
+    post:
+      consumes:
+      - application/json
+      description: Create new Property
+      parameters:
+      - description: CreatePropertyRequest
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreatePropertyRequest'
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: Create new Property
+      tags:
+      - Property
+    put:
+      consumes:
+      - application/json
+      description: Update new Property
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: UpdatePropertyRequest
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UpdatePropertyRequest'
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: Update new Property
+      tags:
+      - Property
   /v1/users/login-by-username:
     post:
       consumes:

@@ -35,8 +35,9 @@ func (h *CityHandler) Create(ctx *gin.Context) {
 // @Tags City
 // @Accept  json
 // @Produce  json
+// @Param id path int true "Id"
 // @Param Request body dto.UpdateCityReq true "UpdateCityReq"
-// @Router /v1/cities/ [put]
+// @Router /v1/cities/{id} [put]
 // @Security AuthBearer
 func (h *CityHandler) Update(ctx *gin.Context) {
 	Update(ctx, h.service.Update)
@@ -49,7 +50,7 @@ func (h *CityHandler) Update(ctx *gin.Context) {
 // @Accept  json
 // @Produce  json
 // @Param id path int true "Id"
-// @Router /v1/cities/ [delete]
+// @Router /v1/cities/{id} [delete]
 // @Security AuthBearer
 func (h *CityHandler) Delete(ctx *gin.Context) {
 	Delete(ctx, h.service.Delete)

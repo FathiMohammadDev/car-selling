@@ -56,6 +56,7 @@ func (h *CountryHandler) Create(ctx *gin.Context) {
 // @Tags Country
 // @Accept  json
 // @Produce  json
+// @Param id path int true "Id"
 // @Param Request body dto.CreateUpdateCountryReq true "CreateUpdateCountryReq"
 // @Router /v1/countries/{id} [put]
 // @Security AuthBearer

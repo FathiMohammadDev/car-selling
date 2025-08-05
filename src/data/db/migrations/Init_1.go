@@ -1,7 +1,6 @@
 package migrations
 
 import (
-
 	"github.com/FathiMohammadDev/car-selling/config"
 	"github.com/FathiMohammadDev/car-selling/constants"
 	"github.com/FathiMohammadDev/car-selling/data/db"
@@ -22,7 +21,9 @@ func Up1() {
 	createDefaultInformation(database)
 	createCountry(database)
 	createPropertyCategory(database)
-	
+	createCarType(database)
+	createGearbox(database)
+
 }
 
 func CreateTables(database *gorm.DB) {
@@ -30,6 +31,10 @@ func CreateTables(database *gorm.DB) {
 
 	property := models.Property{}
 	PropertyCategory := models.PropertyCategory{}
+	company := models.Company{}
+	gearbox := models.Gearbox{}
+	color := models.Color{}
+	carType := models.CarType{}
 	file := models.File{}
 	country := models.Country{}
 	city := models.City{}
@@ -39,6 +44,10 @@ func CreateTables(database *gorm.DB) {
 
 	tables = addNewTable(database, PropertyCategory, tables)
 	tables = addNewTable(database, property, tables)
+	tables = addNewTable(database, company, tables)
+	tables = addNewTable(database, gearbox, tables)
+	tables = addNewTable(database, color, tables)
+	tables = addNewTable(database, carType, tables)
 	tables = addNewTable(database, file, tables)
 	tables = addNewTable(database, country, tables)
 	tables = addNewTable(database, city, tables)
@@ -110,34 +119,58 @@ func createCountry(database *gorm.DB) {
 			{Name: "Shiraz"},
 			{Name: "Chalus"},
 			{Name: "Ahwaz"},
+		}, Companies: []models.Company{
+			{Name: "Saipa"},
+			{Name: "Iran khodro"},
 		}})
 		database.Create(&models.Country{Name: "USA", Cities: []models.City{
 			{Name: "New York"},
 			{Name: "Washington"},
+		}, Companies: []models.Company{
+			{Name: "Tesla"},
+			{Name: "Jeep"},
 		}})
 		database.Create(&models.Country{Name: "Germany", Cities: []models.City{
 			{Name: "Berlin"},
 			{Name: "Munich"},
+		}, Companies: []models.Company{
+			{Name: "Opel"},
+			{Name: "Benz"},
 		}})
 		database.Create(&models.Country{Name: "China", Cities: []models.City{
 			{Name: "Beijing"},
 			{Name: "Shanghai"},
+		}, Companies: []models.Company{
+			{Name: "Chery"},
+			{Name: "Geely"},
 		}})
 		database.Create(&models.Country{Name: "Italy", Cities: []models.City{
 			{Name: "Roma"},
 			{Name: "Turin"},
+		}, Companies: []models.Company{
+			{Name: "Ferrari"},
+			{Name: "Fiat"},
 		}})
 		database.Create(&models.Country{Name: "France", Cities: []models.City{
 			{Name: "Paris"},
 			{Name: "Lyon"},
+		}, Companies: []models.Company{
+			{Name: "Renault"},
+			{Name: "Bugatti"},
 		}})
 		database.Create(&models.Country{Name: "Japan", Cities: []models.City{
 			{Name: "Tokyo"},
 			{Name: "Kyoto"},
+		}, Companies: []models.Company{
+			{Name: "Toyota"},
+			{Name: "Honda"},
 		}})
 		database.Create(&models.Country{Name: "South Korea", Cities: []models.City{
 			{Name: "Seoul"},
 			{Name: "Ulsan"},
+		}, Companies: []models.Company{
+			{Name: "Kia"},
+			{Name: "Hyundai"},
 		}})
 	}
 }
@@ -235,5 +268,32 @@ func createProperty(database *gorm.DB, cat string) {
 
 	for _, prop := range *props {
 		database.Create(&prop)
+	}
+}
+
+func createCarType(database *gorm.DB) {
+	count := 0
+	database.
+		Model(&models.CarType{}).
+		Select("count(*)").
+		Find(&count)
+	if count == 0 {
+		database.Create(&models.CarType{Name: "Crossover"})
+		database.Create(&models.CarType{Name: "Sedan"})
+		database.Create(&models.CarType{Name: "Sports"})
+		database.Create(&models.CarType{Name: "Coupe"})
+		database.Create(&models.CarType{Name: "Hatchback"})
+	}
+}
+
+func createGearbox(database *gorm.DB) {
+	count := 0
+	database.
+		Model(&models.Gearbox{}).
+		Select("count(*)").
+		Find(&count)
+	if count == 0 {
+		database.Create(&models.Gearbox{Name: "Manual"})
+		database.Create(&models.Gearbox{Name: "Automatic"})
 	}
 }

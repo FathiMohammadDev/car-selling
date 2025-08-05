@@ -31,11 +31,15 @@ func registerRoutes(r *gin.Engine, cfg *config.Config) {
 
 	v1 := r.Group("/api/v1/")
 	{
+		property := v1.Group("/property")
+		propertyCategory := v1.Group("/property-category")
 		users := v1.Group("/users")
 		country := v1.Group("/countries", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
 		city := v1.Group("/cities", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
 		file := v1.Group("/files", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
 
+		routers.PropertyCategory(propertyCategory, cfg)
+		routers.Property(property, cfg)
 		routers.File(file, cfg)
 		routers.City(city, cfg)
 		routers.Country(country, cfg)

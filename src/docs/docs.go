@@ -142,6 +142,133 @@ const docTemplate = `{
                 "responses": {}
             }
         },
+        "/v1/car-model-year/": {
+            "post": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Create new CarModelYear",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "CarModelYear"
+                ],
+                "summary": "Create new CarModelYear",
+                "parameters": [
+                    {
+                        "description": "CreateCarModelYearReq",
+                        "name": "Request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreateCarModelYearReq"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/v1/car-model-year/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Get a CarModelYear",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "CarModelYear"
+                ],
+                "summary": "Get a CarModelYear",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            },
+            "put": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Update CarModelYear",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "CarModelYear"
+                ],
+                "summary": "Update CarModelYear",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "UpdateCarModelYearReq",
+                        "name": "Request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateCarModelYearReq"
+                        }
+                    }
+                ],
+                "responses": {}
+            },
+            "delete": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "delete CarModelYear",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "CarModelYear"
+                ],
+                "summary": "delete CarModelYear",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
         "/v1/car-model/": {
             "post": {
                 "security": [
@@ -1491,6 +1618,133 @@ const docTemplate = `{
                 ],
                 "responses": {}
             }
+        },
+        "/v1/year/": {
+            "post": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Create new Year",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Year"
+                ],
+                "summary": "Create new Year",
+                "parameters": [
+                    {
+                        "description": "CreateYearReq",
+                        "name": "Request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreateYearReq"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/v1/year/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Get a Year",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Year"
+                ],
+                "summary": "Get a Year",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            },
+            "put": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Update Year",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Year"
+                ],
+                "summary": "Update Year",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "UpdateYearReq",
+                        "name": "Request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateYearReq"
+                        }
+                    }
+                ],
+                "responses": {}
+            },
+            "delete": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "delete Year",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Year"
+                ],
+                "summary": "delete Year",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
         }
     },
     "definitions": {
@@ -1531,6 +1785,21 @@ const docTemplate = `{
                     "type": "string",
                     "maxLength": 15,
                     "minLength": 3
+                }
+            }
+        },
+        "dto.CreateCarModelYearReq": {
+            "type": "object",
+            "required": [
+                "carModelId",
+                "persianYearId"
+            ],
+            "properties": {
+                "carModelId": {
+                    "type": "integer"
+                },
+                "persianYearId": {
+                    "type": "integer"
                 }
             }
         },
@@ -1672,6 +1941,25 @@ const docTemplate = `{
                 }
             }
         },
+        "dto.CreateYearReq": {
+            "type": "object",
+            "properties": {
+                "Title": {
+                    "type": "string",
+                    "maxLength": 4,
+                    "minLength": 4
+                },
+                "endAt": {
+                    "type": "string"
+                },
+                "startAt": {
+                    "type": "string"
+                },
+                "year": {
+                    "type": "integer"
+                }
+            }
+        },
         "dto.GetOtpRequest": {
             "type": "object",
             "required": [
@@ -1758,6 +2046,17 @@ const docTemplate = `{
                 },
                 "name": {
                     "type": "string"
+                }
+            }
+        },
+        "dto.UpdateCarModelYearReq": {
+            "type": "object",
+            "properties": {
+                "carModelId": {
+                    "type": "integer"
+                },
+                "persianYearId": {
+                    "type": "integer"
                 }
             }
         },
@@ -1871,6 +2170,25 @@ const docTemplate = `{
                 "unit": {
                     "type": "string",
                     "maxLength": 15
+                }
+            }
+        },
+        "dto.UpdateYearReq": {
+            "type": "object",
+            "properties": {
+                "Title": {
+                    "type": "string",
+                    "maxLength": 4,
+                    "minLength": 4
+                },
+                "endAt": {
+                    "type": "string"
+                },
+                "startAt": {
+                    "type": "string"
+                },
+                "year": {
+                    "type": "integer"
                 }
             }
         }

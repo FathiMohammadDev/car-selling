@@ -27,6 +27,16 @@ definitions:
     - gearboxId
     - name
     type: object
+  dto.CreateCarModelYearReq:
+    properties:
+      carModelId:
+        type: integer
+      persianYearId:
+        type: integer
+    required:
+    - carModelId
+    - persianYearId
+    type: object
   dto.CreateCarTypeReq:
     properties:
       name:
@@ -125,6 +135,19 @@ definitions:
     required:
     - name
     type: object
+  dto.CreateYearReq:
+    properties:
+      Title:
+        maxLength: 4
+        minLength: 4
+        type: string
+      endAt:
+        type: string
+      startAt:
+        type: string
+      year:
+        type: integer
+    type: object
   dto.GetOtpRequest:
     properties:
       mobileNumber:
@@ -186,6 +209,13 @@ definitions:
         type: integer
       name:
         type: string
+    type: object
+  dto.UpdateCarModelYearReq:
+    properties:
+      carModelId:
+        type: integer
+      persianYearId:
+        type: integer
     type: object
   dto.UpdateCarTypeReq:
     properties:
@@ -264,6 +294,19 @@ definitions:
       unit:
         maxLength: 15
         type: string
+    type: object
+  dto.UpdateYearReq:
+    properties:
+      Title:
+        maxLength: 4
+        minLength: 4
+        type: string
+      endAt:
+        type: string
+      startAt:
+        type: string
+      year:
+        type: integer
     type: object
 info:
   contact: {}
@@ -349,6 +392,87 @@ paths:
       summary: Update CarModelColor
       tags:
       - CarModelColor
+  /v1/car-model-year/:
+    post:
+      consumes:
+      - application/json
+      description: Create new CarModelYear
+      parameters:
+      - description: CreateCarModelYearReq
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateCarModelYearReq'
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: Create new CarModelYear
+      tags:
+      - CarModelYear
+  /v1/car-model-year/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: delete CarModelYear
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: delete CarModelYear
+      tags:
+      - CarModelYear
+    get:
+      consumes:
+      - application/json
+      description: Get a CarModelYear
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: Get a CarModelYear
+      tags:
+      - CarModelYear
+    put:
+      consumes:
+      - application/json
+      description: Update CarModelYear
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: UpdateCarModelYearReq
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UpdateCarModelYearReq'
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: Update CarModelYear
+      tags:
+      - CarModelYear
   /v1/car-model/:
     post:
       consumes:
@@ -1213,6 +1337,87 @@ paths:
       summary: Send otp to user
       tags:
       - Users
+  /v1/year/:
+    post:
+      consumes:
+      - application/json
+      description: Create new Year
+      parameters:
+      - description: CreateYearReq
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateYearReq'
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: Create new Year
+      tags:
+      - Year
+  /v1/year/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: delete Year
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: delete Year
+      tags:
+      - Year
+    get:
+      consumes:
+      - application/json
+      description: Get a Year
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: Get a Year
+      tags:
+      - Year
+    put:
+      consumes:
+      - application/json
+      description: Update Year
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: UpdateYearReq
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UpdateYearReq'
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: Update Year
+      tags:
+      - Year
 securityDefinitions:
   AuthBearer:
     in: header

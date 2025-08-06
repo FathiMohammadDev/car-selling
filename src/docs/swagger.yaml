@@ -1,4 +1,13 @@
 definitions:
+  dto.CreateCarTypeReq:
+    properties:
+      name:
+        maxLength: 15
+        minLength: 3
+        type: string
+    required:
+    - name
+    type: object
   dto.CreateCityReq:
     properties:
       countryId:
@@ -100,6 +109,15 @@ definitions:
     - password
     - username
     type: object
+  dto.UpdateCarTypeReq:
+    properties:
+      name:
+        maxLength: 15
+        minLength: 3
+        type: string
+    required:
+    - name
+    type: object
   dto.UpdateCityReq:
     properties:
       countryId:
@@ -143,6 +161,87 @@ definitions:
 info:
   contact: {}
 paths:
+  /v1/car-type/:
+    post:
+      consumes:
+      - application/json
+      description: Create new CarType
+      parameters:
+      - description: CreateCarTypeReq
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateCarTypeReq'
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: Create new CarType
+      tags:
+      - CarType
+  /v1/car-type/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: delete CarType
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: delete CarType
+      tags:
+      - CarType
+    get:
+      consumes:
+      - application/json
+      description: Get a CarType
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: Get a CarType
+      tags:
+      - CarType
+    put:
+      consumes:
+      - application/json
+      description: Update CarType
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: UpdateCarTypeReq
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UpdateCarTypeReq'
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: Update CarType
+      tags:
+      - CarType
   /v1/cities/:
     post:
       consumes:
@@ -468,6 +567,26 @@ paths:
       tags:
       - PropertyCategory
   /v1/property/:
+    post:
+      consumes:
+      - application/json
+      description: Create new Property
+      parameters:
+      - description: CreatePropertyRequest
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreatePropertyRequest'
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: Create new Property
+      tags:
+      - Property
+  /v1/property/{id}:
     delete:
       consumes:
       - application/json
@@ -502,25 +621,6 @@ paths:
       security:
       - AuthBearer: []
       summary: Get new Property
-      tags:
-      - Property
-    post:
-      consumes:
-      - application/json
-      description: Create new Property
-      parameters:
-      - description: CreatePropertyRequest
-        in: body
-        name: Request
-        required: true
-        schema:
-          $ref: '#/definitions/dto.CreatePropertyRequest'
-      produces:
-      - application/json
-      responses: {}
-      security:
-      - AuthBearer: []
-      summary: Create new Property
       tags:
       - Property
     put:

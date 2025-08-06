@@ -15,6 +15,133 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/v1/car-type/": {
+            "post": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Create new CarType",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "CarType"
+                ],
+                "summary": "Create new CarType",
+                "parameters": [
+                    {
+                        "description": "CreateCarTypeReq",
+                        "name": "Request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreateCarTypeReq"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/v1/car-type/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Get a CarType",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "CarType"
+                ],
+                "summary": "Get a CarType",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            },
+            "put": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Update CarType",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "CarType"
+                ],
+                "summary": "Update CarType",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "UpdateCarTypeReq",
+                        "name": "Request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateCarTypeReq"
+                        }
+                    }
+                ],
+                "responses": {}
+            },
+            "delete": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "delete CarType",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "CarType"
+                ],
+                "summary": "delete CarType",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
         "/v1/cities/": {
             "post": {
                 "security": [
@@ -523,6 +650,38 @@ const docTemplate = `{
             }
         },
         "/v1/property/": {
+            "post": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Create new Property",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Property"
+                ],
+                "summary": "Create new Property",
+                "parameters": [
+                    {
+                        "description": "CreatePropertyRequest",
+                        "name": "Request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreatePropertyRequest"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/v1/property/{id}": {
             "get": {
                 "security": [
                     {
@@ -583,36 +742,6 @@ const docTemplate = `{
                         "required": true,
                         "schema": {
                             "$ref": "#/definitions/dto.UpdatePropertyRequest"
-                        }
-                    }
-                ],
-                "responses": {}
-            },
-            "post": {
-                "security": [
-                    {
-                        "AuthBearer": []
-                    }
-                ],
-                "description": "Create new Property",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Property"
-                ],
-                "summary": "Create new Property",
-                "parameters": [
-                    {
-                        "description": "CreatePropertyRequest",
-                        "name": "Request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/dto.CreatePropertyRequest"
                         }
                     }
                 ],
@@ -730,6 +859,19 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "dto.CreateCarTypeReq": {
+            "type": "object",
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "maxLength": 15,
+                    "minLength": 3
+                }
+            }
+        },
         "dto.CreateCityReq": {
             "type": "object",
             "required": [
@@ -868,6 +1010,19 @@ const docTemplate = `{
                 "username": {
                     "type": "string",
                     "minLength": 5
+                }
+            }
+        },
+        "dto.UpdateCarTypeReq": {
+            "type": "object",
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "maxLength": 15,
+                    "minLength": 3
                 }
             }
         },

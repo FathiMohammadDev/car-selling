@@ -33,6 +33,7 @@ func registerRoutes(r *gin.Engine, cfg *config.Config) {
 	{
 		users := v1.Group("/users")
 		color := v1.Group("/color", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
+		carModelColor := v1.Group("/car-model-color", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
 		carModel := v1.Group("/car-model", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
 		company := v1.Group("/company", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
 		gearbox := v1.Group("/gearbox", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
@@ -44,6 +45,7 @@ func registerRoutes(r *gin.Engine, cfg *config.Config) {
 		file := v1.Group("/files", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
 
 		routers.Color(color, cfg)
+		routers.CarModelColor(carModelColor, cfg)
 		routers.CarModel(carModel, cfg)
 		routers.Company(company, cfg)
 		routers.Gearbox(gearbox, cfg)

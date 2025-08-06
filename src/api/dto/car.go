@@ -41,12 +41,13 @@ type UpdateCarModelReq struct {
 }
 
 type CarModelRes struct {
-	Id             int                     `json:"id"`
-	Name           string                  `json:"name"`
-	CarType        CarTypeRes              `json:"carType"`
-	Company        CompanyRes              `json:"company"`
-	Gearbox        GearboxRes              `json:"gearbox"`
+	Id             int                `json:"id"`
+	Name           string             `json:"name"`
+	CarType        CarTypeRes         `json:"carType"`
+	Company        CompanyRes         `json:"company"`
+	Gearbox        GearboxRes         `json:"gearbox"`
 	CarModelColors []CarModelColorRes `json:"carModelColors,omitempty"`
+	CarModelYears  []CarModelYearRes  `json:"carModelYears,omitempty"`
 }
 
 type CreateCarModelColorReq struct {
@@ -62,4 +63,20 @@ type UpdateCarModelColorReq struct {
 type CarModelColorRes struct {
 	Id    int      `json:"id"`
 	Color ColorRes `json:"color,omitempty"`
+}
+
+type CreateCarModelYearReq struct {
+	CarModelId    int `json:"carModelId" binding:"required"`
+	PersianYearId int `json:"persianYearId" binding:"required"`
+}
+
+type UpdateCarModelYearReq struct {
+	CarModelId    int `json:"carModelId,omitempty"`
+	PersianYearId int `json:"persianYearId,omitempty"`
+}
+
+type CarModelYearRes struct {
+	Id          int                `json:"id"`
+	PersianYear YearWithoutDateRes `json:"persianYear,omitempty"`
+	CarModelId  int                `json:"carModelId,omitempty"`
 }

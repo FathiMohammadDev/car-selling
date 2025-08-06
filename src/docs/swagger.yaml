@@ -20,6 +20,15 @@ definitions:
     - countryId
     - name
     type: object
+  dto.CreateGearboxReq:
+    properties:
+      name:
+        maxLength: 15
+        minLength: 3
+        type: string
+    required:
+    - name
+    type: object
   dto.CreatePropertyCategoryRequest:
     properties:
       icon:
@@ -131,6 +140,15 @@ definitions:
     properties:
       description:
         type: string
+    type: object
+  dto.UpdateGearboxReq:
+    properties:
+      name:
+        maxLength: 15
+        minLength: 3
+        type: string
+    required:
+    - name
     type: object
   dto.UpdatePropertyCategoryRequest:
     properties:
@@ -480,6 +498,87 @@ paths:
       summary: Update a file
       tags:
       - Files
+  /v1/gearbox/:
+    post:
+      consumes:
+      - application/json
+      description: Create new Gearbox
+      parameters:
+      - description: CreateGearboxReq
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateGearboxReq'
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: Create new Gearbox
+      tags:
+      - Gearbox
+  /v1/gearbox/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: delete Gearbox
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: delete Gearbox
+      tags:
+      - Gearbox
+    get:
+      consumes:
+      - application/json
+      description: Get a Gearbox
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: Get a Gearbox
+      tags:
+      - Gearbox
+    put:
+      consumes:
+      - application/json
+      description: Update Gearbox
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: UpdateGearboxReq
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UpdateGearboxReq'
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: Update Gearbox
+      tags:
+      - Gearbox
   /v1/property-category/:
     post:
       consumes:

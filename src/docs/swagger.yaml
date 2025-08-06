@@ -1,4 +1,14 @@
 definitions:
+  dto.CreateCarModelColorReq:
+    properties:
+      carModelId:
+        type: integer
+      colorId:
+        type: integer
+    required:
+    - carModelId
+    - colorId
+    type: object
   dto.CreateCarModelReq:
     properties:
       carTypeId:
@@ -159,6 +169,13 @@ definitions:
     - password
     - username
     type: object
+  dto.UpdateCarModelColorReq:
+    properties:
+      carModelId:
+        type: integer
+      colorId:
+        type: integer
+    type: object
   dto.UpdateCarModelReq:
     properties:
       carTypeId:
@@ -251,6 +268,87 @@ definitions:
 info:
   contact: {}
 paths:
+  /v1/car-model-color/:
+    post:
+      consumes:
+      - application/json
+      description: Create new CarModelColor
+      parameters:
+      - description: CreateCarModelColorReq
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateCarModelColorReq'
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: Create new CarModelColor
+      tags:
+      - CarModelColor
+  /v1/car-model-color/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: delete CarModelColor
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: delete CarModelColor
+      tags:
+      - CarModelColor
+    get:
+      consumes:
+      - application/json
+      description: Get a CarModelColor
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: Get a CarModelColor
+      tags:
+      - CarModelColor
+    put:
+      consumes:
+      - application/json
+      description: Update CarModelColor
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: UpdateCarModelColorReq
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UpdateCarModelColorReq'
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: Update CarModelColor
+      tags:
+      - CarModelColor
   /v1/car-model/:
     post:
       consumes:

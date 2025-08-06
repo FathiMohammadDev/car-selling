@@ -2,6 +2,7 @@ package migrations
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/FathiMohammadDev/car-selling/config"
 	"github.com/FathiMohammadDev/car-selling/constants"
@@ -26,6 +27,7 @@ func Up1() {
 	createCarType(database)
 	createGearbox(database)
 	createColor(database)
+	createYear(database)
 
 }
 
@@ -317,5 +319,56 @@ func createColor(database *gorm.DB) {
 		database.Create(&models.Color{Name: "Black", HexCode: "#000000"})
 		database.Create(&models.Color{Name: "White", HexCode: "#ffffff"})
 		database.Create(&models.Color{Name: "Blue", HexCode: "#0000ff"})
+	}
+}
+func createYear(database *gorm.DB) {
+	count := 0
+	database.
+		Model(&models.PersianYear{}).
+		Select(countStarExp).
+		Find(&count)
+	if count == 0 {
+
+		database.Create(&models.PersianYear{
+			PersianTitle: "1402",
+			Year:         1402,
+			StartAt:      time.Date(2023, time.Month(3), 21, 0, 0, 0, 0, time.UTC),
+			EndAt:        time.Date(2024, time.Month(3), 20, 0, 0, 0, 0, time.UTC),
+		})
+
+		database.Create(&models.PersianYear{
+			PersianTitle: "1401",
+			Year:         1401,
+			StartAt:      time.Date(2022, time.Month(3), 21, 0, 0, 0, 0, time.UTC),
+			EndAt:        time.Date(2023, time.Month(3), 21, 0, 0, 0, 0, time.UTC),
+		})
+
+		database.Create(&models.PersianYear{
+			PersianTitle: "1400",
+			Year:         1400,
+			StartAt:      time.Date(2021, time.Month(3), 21, 0, 0, 0, 0, time.UTC),
+			EndAt:        time.Date(2022, time.Month(3), 21, 0, 0, 0, 0, time.UTC),
+		})
+
+		database.Create(&models.PersianYear{
+			PersianTitle: "1399",
+			Year:         1399,
+			StartAt:      time.Date(2020, time.Month(3), 20, 0, 0, 0, 0, time.UTC),
+			EndAt:        time.Date(2021, time.Month(3), 21, 0, 0, 0, 0, time.UTC),
+		})
+
+		database.Create(&models.PersianYear{
+			PersianTitle: "1398",
+			Year:         1398,
+			StartAt:      time.Date(2019, time.Month(3), 21, 0, 0, 0, 0, time.UTC),
+			EndAt:        time.Date(2020, time.Month(3), 20, 0, 0, 0, 0, time.UTC),
+		})
+
+		database.Create(&models.PersianYear{
+			PersianTitle: "1398",
+			Year:         1398,
+			StartAt:      time.Date(2018, time.Month(3), 21, 0, 0, 0, 0, time.UTC),
+			EndAt:        time.Date(2019, time.Month(3), 21, 0, 0, 0, 0, time.UTC),
+		})
 	}
 }

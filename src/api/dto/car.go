@@ -41,9 +41,25 @@ type UpdateCarModelReq struct {
 }
 
 type CarModelRes struct {
-	Id      int        `json:"id"`
-	Name    string     `json:"name"`
-	CarType CarTypeRes `json:"carType"`
-	Company CompanyRes `json:"company"`
-	Gearbox GearboxRes `json:"gearbox"`
+	Id             int                     `json:"id"`
+	Name           string                  `json:"name"`
+	CarType        CarTypeRes              `json:"carType"`
+	Company        CompanyRes              `json:"company"`
+	Gearbox        GearboxRes              `json:"gearbox"`
+	CarModelColors []CarModelColorRes `json:"carModelColors,omitempty"`
+}
+
+type CreateCarModelColorReq struct {
+	CarModelId int `json:"carModelId" binding:"required"`
+	ColorId    int `json:"colorId" binding:"required"`
+}
+
+type UpdateCarModelColorReq struct {
+	CarModelId int `json:"carModelId,omitempty"`
+	ColorId    int `json:"colorId,omitempty"`
+}
+
+type CarModelColorRes struct {
+	Id    int      `json:"id"`
+	Color ColorRes `json:"color,omitempty"`
 }

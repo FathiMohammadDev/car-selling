@@ -1,4 +1,22 @@
 definitions:
+  dto.CreateCarModelReq:
+    properties:
+      carTypeId:
+        type: integer
+      companyId:
+        type: integer
+      gearboxId:
+        type: integer
+      name:
+        maxLength: 15
+        minLength: 3
+        type: string
+    required:
+    - carTypeId
+    - companyId
+    - gearboxId
+    - name
+    type: object
   dto.CreateCarTypeReq:
     properties:
       name:
@@ -130,6 +148,17 @@ definitions:
     - password
     - username
     type: object
+  dto.UpdateCarModelReq:
+    properties:
+      carTypeId:
+        type: integer
+      companyId:
+        type: integer
+      gearboxId:
+        type: integer
+      name:
+        type: string
+    type: object
   dto.UpdateCarTypeReq:
     properties:
       name:
@@ -200,6 +229,87 @@ definitions:
 info:
   contact: {}
 paths:
+  /v1/car-model/:
+    post:
+      consumes:
+      - application/json
+      description: Create new CarModel
+      parameters:
+      - description: CreateCarModelReq
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateCarModelReq'
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: Create new CarModel
+      tags:
+      - CarModel
+  /v1/car-model/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: delete CarModel
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: delete CarModel
+      tags:
+      - CarModel
+    get:
+      consumes:
+      - application/json
+      description: Get a CarModel
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: Get a CarModel
+      tags:
+      - CarModel
+    put:
+      consumes:
+      - application/json
+      description: Update CarModel
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: UpdateCarModelReq
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UpdateCarModelReq'
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: Update CarModel
+      tags:
+      - CarModel
   /v1/car-type/:
     post:
       consumes:

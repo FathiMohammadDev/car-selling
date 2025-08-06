@@ -396,6 +396,133 @@ const docTemplate = `{
                 "responses": {}
             }
         },
+        "/v1/color/": {
+            "post": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Create new Color",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Color"
+                ],
+                "summary": "Create new Color",
+                "parameters": [
+                    {
+                        "description": "CreateColorReq",
+                        "name": "Request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreateColorReq"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/v1/color/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Get a Color",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Color"
+                ],
+                "summary": "Get a Color",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            },
+            "put": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Update Color",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Color"
+                ],
+                "summary": "Update Color",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "UpdateColorReq",
+                        "name": "Request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateColorReq"
+                        }
+                    }
+                ],
+                "responses": {}
+            },
+            "delete": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "delete Color",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Color"
+                ],
+                "summary": "delete Color",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
         "/v1/company/": {
             "post": {
                 "security": [
@@ -1295,6 +1422,21 @@ const docTemplate = `{
                 }
             }
         },
+        "dto.CreateColorReq": {
+            "type": "object",
+            "properties": {
+                "hexCode": {
+                    "type": "string",
+                    "maxLength": 7,
+                    "minLength": 7
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 15,
+                    "minLength": 3
+                }
+            }
+        },
         "dto.CreateCompanyReq": {
             "type": "object",
             "required": [
@@ -1488,6 +1630,21 @@ const docTemplate = `{
                 "name": {
                     "type": "string",
                     "maxLength": 20,
+                    "minLength": 3
+                }
+            }
+        },
+        "dto.UpdateColorReq": {
+            "type": "object",
+            "properties": {
+                "hexCode": {
+                    "type": "string",
+                    "maxLength": 7,
+                    "minLength": 7
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 15,
                     "minLength": 3
                 }
             }

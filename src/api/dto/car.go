@@ -43,14 +43,16 @@ type UpdateCarModelReq struct {
 }
 
 type CarModelRes struct {
-	Id             int                `json:"id"`
-	Name           string             `json:"name"`
-	CarType        CarTypeRes         `json:"carType"`
-	Company        CompanyRes         `json:"company"`
-	Gearbox        GearboxRes         `json:"gearbox"`
-	CarModelColors []CarModelColorRes `json:"carModelColors,omitempty"`
-	CarModelYears  []CarModelYearRes  `json:"carModelYears,omitempty"`
-	CarModelImages []CarModelImageRes `json:"carModelImages,omitempty"`
+	Id                 int                   `json:"id"`
+	Name               string                `json:"name"`
+	CarType            CarTypeRes            `json:"carType"`
+	Company            CompanyRes            `json:"company"`
+	Gearbox            GearboxRes            `json:"gearbox"`
+	CarModelColors     []CarModelColorRes    `json:"carModelColors,omitempty"`
+	CarModelYears      []CarModelYearRes     `json:"carModelYears,omitempty"`
+	CarModelImages     []CarModelImageRes    `json:"carModelImages,omitempty"`
+	CarModelProperties []CarModelPropertyRes `json:"carModelProperties,omitempty"`
+	CarModelComments   []CarModelCommentRes  `json:"carModelComments,omitempty"`
 }
 
 type CreateCarModelColorReq struct {
@@ -118,4 +120,46 @@ type CarModelImageRes struct {
 	CarModelId  int          `json:"carModelId,omitempty"`
 	Image       FileResponse `json:"image,omitempty"`
 	IsMainImage bool         `json:"isMainImage"`
+}
+
+type CreateCarModelPropertyReq struct {
+	CarModelId int    `json:"carModelId" binding:"required"`
+	PropertyId int    `json:"propertyId" binding:"required"`
+	Value      string `json:"value" binding:"required,max=100"`
+}
+
+type UpdateCarModelPropertyReq struct {
+	Value string `json:"value" binding:"required,max=100"`
+}
+
+type CarModelPropertyRes struct {
+	Id         int         `json:"id"`
+	CarModelId int         `json:"carModelId,omitempty"`
+	Property   PropertyResponse `json:"property,omitempty"`
+	Value      string      `json:"value"`
+}
+
+type CreateCarModelCommentReq struct {
+	CarModelId int    `json:"carModelId" binding:"required"`
+	UserId     int    `json:"userId"`
+	Message    string `json:"message" binding:"required,max=100"`
+}
+
+type UpdateCarModelCommentReq struct {
+	Message string `json:"message" binding:"required,max=100"`
+}
+
+type CarModelCommentRes struct {
+	Id         int     `json:"id"`
+	CarModelId int     `json:"carModelId"`
+	User       UserRes `json:"user"`
+	Message    string  `json:"message"`
+}
+
+type UserRes struct {
+	Id        int    `json:"id"`
+	Username  string `json:"username"`
+	FirstName string `json:"firstName"`
+	LastName  string `json:"lastName"`
+	Email     string `json:"email"`
 }

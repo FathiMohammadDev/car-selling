@@ -9,6 +9,19 @@ definitions:
     - carModelId
     - colorId
     type: object
+  dto.CreateCarModelPriceHistoryReq:
+    properties:
+      carModelYearId:
+        type: integer
+      price:
+        type: number
+      priceAt:
+        type: string
+    required:
+    - carModelYearId
+    - price
+    - priceAt
+    type: object
   dto.CreateCarModelReq:
     properties:
       carTypeId:
@@ -198,6 +211,13 @@ definitions:
         type: integer
       colorId:
         type: integer
+    type: object
+  dto.UpdateCarModelPriceHistoryReq:
+    properties:
+      price:
+        type: number
+      priceAt:
+        type: string
     type: object
   dto.UpdateCarModelReq:
     properties:
@@ -392,6 +412,87 @@ paths:
       summary: Update CarModelColor
       tags:
       - CarModelColor
+  /v1/car-model-price-history/:
+    post:
+      consumes:
+      - application/json
+      description: Create new CarModelPriceHistory
+      parameters:
+      - description: CreateCarModelPriceHistoryReq
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateCarModelPriceHistoryReq'
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: Create new CarModelPriceHistory
+      tags:
+      - CarModelPriceHistory
+  /v1/car-model-price-history/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: delete CarModelPriceHistory
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: delete CarModelPriceHistory
+      tags:
+      - CarModelPriceHistory
+    get:
+      consumes:
+      - application/json
+      description: Get a CarModelPriceHistory
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: Get a CarModelPriceHistory
+      tags:
+      - CarModelPriceHistory
+    put:
+      consumes:
+      - application/json
+      description: Update CarModelPriceHistory
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: UpdateCarModelPriceHistoryReq
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UpdateCarModelPriceHistoryReq'
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: Update CarModelPriceHistory
+      tags:
+      - CarModelPriceHistory
   /v1/car-model-year/:
     post:
       consumes:

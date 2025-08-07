@@ -142,6 +142,133 @@ const docTemplate = `{
                 "responses": {}
             }
         },
+        "/v1/car-model-price-history/": {
+            "post": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Create new CarModelPriceHistory",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "CarModelPriceHistory"
+                ],
+                "summary": "Create new CarModelPriceHistory",
+                "parameters": [
+                    {
+                        "description": "CreateCarModelPriceHistoryReq",
+                        "name": "Request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreateCarModelPriceHistoryReq"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/v1/car-model-price-history/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Get a CarModelPriceHistory",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "CarModelPriceHistory"
+                ],
+                "summary": "Get a CarModelPriceHistory",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            },
+            "put": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Update CarModelPriceHistory",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "CarModelPriceHistory"
+                ],
+                "summary": "Update CarModelPriceHistory",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "UpdateCarModelPriceHistoryReq",
+                        "name": "Request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateCarModelPriceHistoryReq"
+                        }
+                    }
+                ],
+                "responses": {}
+            },
+            "delete": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "delete CarModelPriceHistory",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "CarModelPriceHistory"
+                ],
+                "summary": "delete CarModelPriceHistory",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
         "/v1/car-model-year/": {
             "post": {
                 "security": [
@@ -1763,6 +1890,25 @@ const docTemplate = `{
                 }
             }
         },
+        "dto.CreateCarModelPriceHistoryReq": {
+            "type": "object",
+            "required": [
+                "carModelYearId",
+                "price",
+                "priceAt"
+            ],
+            "properties": {
+                "carModelYearId": {
+                    "type": "integer"
+                },
+                "price": {
+                    "type": "number"
+                },
+                "priceAt": {
+                    "type": "string"
+                }
+            }
+        },
         "dto.CreateCarModelReq": {
             "type": "object",
             "required": [
@@ -2029,6 +2175,17 @@ const docTemplate = `{
                 },
                 "colorId": {
                     "type": "integer"
+                }
+            }
+        },
+        "dto.UpdateCarModelPriceHistoryReq": {
+            "type": "object",
+            "properties": {
+                "price": {
+                    "type": "number"
+                },
+                "priceAt": {
+                    "type": "string"
                 }
             }
         },

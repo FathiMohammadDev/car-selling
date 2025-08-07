@@ -1,5 +1,7 @@
 package dto
 
+import "time"
+
 type CreateCarTypeReq struct {
 	Name string `json:"name" binding:"required,alpha,min=3,max=15"`
 }
@@ -76,7 +78,26 @@ type UpdateCarModelYearReq struct {
 }
 
 type CarModelYearRes struct {
-	Id          int                `json:"id"`
-	PersianYear YearWithoutDateRes `json:"persianYear,omitempty"`
-	CarModelId  int                `json:"carModelId,omitempty"`
+	Id                     int                            `json:"id"`
+	PersianYear            YearWithoutDateRes             `json:"persianYear,omitempty"`
+	CarModelId             int                            `json:"carModelId,omitempty"`
+	CarModelPriceHistories []CarModelPriceHistoryRes `json:"carModelPriceHistories,omitempty"`
+}
+
+type CreateCarModelPriceHistoryReq struct {
+	CarModelYearId int       `json:"carModelYearId" binding:"required"`
+	PriceAt        time.Time `json:"priceAt" binding:"required"`
+	Price          float64   `json:"price" binding:"required"`
+}
+
+type UpdateCarModelPriceHistoryReq struct {
+	PriceAt time.Time `json:"priceAt,omitempty"`
+	Price   float64   `json:"price,omitempty"`
+}
+
+type CarModelPriceHistoryRes struct {
+	Id             int       `json:"id"`
+	CarModelYearId int       `json:"carModelYearId"`
+	PriceAt        time.Time `json:"priceAt,omitempty"`
+	Price          float64   `json:"price,omitempty"`
 }

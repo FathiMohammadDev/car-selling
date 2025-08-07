@@ -9,6 +9,19 @@ definitions:
     - carModelId
     - colorId
     type: object
+  dto.CreateCarModelCommentReq:
+    properties:
+      carModelId:
+        type: integer
+      message:
+        maxLength: 100
+        type: string
+      userId:
+        type: integer
+    required:
+    - carModelId
+    - message
+    type: object
   dto.CreateCarModelImageReq:
     properties:
       carModelId:
@@ -33,6 +46,20 @@ definitions:
     - carModelYearId
     - price
     - priceAt
+    type: object
+  dto.CreateCarModelPropertyReq:
+    properties:
+      carModelId:
+        type: integer
+      propertyId:
+        type: integer
+      value:
+        maxLength: 100
+        type: string
+    required:
+    - carModelId
+    - propertyId
+    - value
     type: object
   dto.CreateCarModelReq:
     properties:
@@ -224,6 +251,14 @@ definitions:
       colorId:
         type: integer
     type: object
+  dto.UpdateCarModelCommentReq:
+    properties:
+      message:
+        maxLength: 100
+        type: string
+    required:
+    - message
+    type: object
   dto.UpdateCarModelImageReq:
     properties:
       isMainImage:
@@ -235,6 +270,14 @@ definitions:
         type: number
       priceAt:
         type: string
+    type: object
+  dto.UpdateCarModelPropertyReq:
+    properties:
+      value:
+        maxLength: 100
+        type: string
+    required:
+    - value
     type: object
   dto.UpdateCarModelReq:
     properties:
@@ -429,6 +472,87 @@ paths:
       summary: Update CarModelColor
       tags:
       - CarModelColor
+  /v1/car-model-comment/:
+    post:
+      consumes:
+      - application/json
+      description: Create new CarModelComment
+      parameters:
+      - description: CreateCarModelCommentReq
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateCarModelCommentReq'
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: Create new CarModelComment
+      tags:
+      - CarModelComment
+  /v1/car-model-comment/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: delete CarModelComment
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: delete CarModelComment
+      tags:
+      - CarModelComment
+    get:
+      consumes:
+      - application/json
+      description: Get a CarModelComment
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: Get a CarModelComment
+      tags:
+      - CarModelComment
+    put:
+      consumes:
+      - application/json
+      description: Update CarModelComment
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: UpdateCarModelCommentReq
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UpdateCarModelCommentReq'
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: Update CarModelComment
+      tags:
+      - CarModelComment
   /v1/car-model-image/:
     post:
       consumes:
@@ -591,6 +715,87 @@ paths:
       summary: Update CarModelPriceHistory
       tags:
       - CarModelPriceHistory
+  /v1/car-model-property/:
+    post:
+      consumes:
+      - application/json
+      description: Create new CarModelProperty
+      parameters:
+      - description: CreateCarModelPropertyReq
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateCarModelPropertyReq'
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: Create new CarModelProperty
+      tags:
+      - CarModelProperty
+  /v1/car-model-property/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: delete CarModelProperty
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: delete CarModelProperty
+      tags:
+      - CarModelProperty
+    get:
+      consumes:
+      - application/json
+      description: Get a CarModelProperty
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: Get a CarModelProperty
+      tags:
+      - CarModelProperty
+    put:
+      consumes:
+      - application/json
+      description: Update CarModelProperty
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: UpdateCarModelPropertyReq
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UpdateCarModelPropertyReq'
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: Update CarModelProperty
+      tags:
+      - CarModelProperty
   /v1/car-model-year/:
     post:
       consumes:

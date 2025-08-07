@@ -142,6 +142,133 @@ const docTemplate = `{
                 "responses": {}
             }
         },
+        "/v1/car-model-comment/": {
+            "post": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Create new CarModelComment",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "CarModelComment"
+                ],
+                "summary": "Create new CarModelComment",
+                "parameters": [
+                    {
+                        "description": "CreateCarModelCommentReq",
+                        "name": "Request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreateCarModelCommentReq"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/v1/car-model-comment/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Get a CarModelComment",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "CarModelComment"
+                ],
+                "summary": "Get a CarModelComment",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            },
+            "put": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Update CarModelComment",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "CarModelComment"
+                ],
+                "summary": "Update CarModelComment",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "UpdateCarModelCommentReq",
+                        "name": "Request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateCarModelCommentReq"
+                        }
+                    }
+                ],
+                "responses": {}
+            },
+            "delete": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "delete CarModelComment",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "CarModelComment"
+                ],
+                "summary": "delete CarModelComment",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
         "/v1/car-model-image/": {
             "post": {
                 "security": [
@@ -384,6 +511,133 @@ const docTemplate = `{
                     "CarModelPriceHistory"
                 ],
                 "summary": "delete CarModelPriceHistory",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/v1/car-model-property/": {
+            "post": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Create new CarModelProperty",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "CarModelProperty"
+                ],
+                "summary": "Create new CarModelProperty",
+                "parameters": [
+                    {
+                        "description": "CreateCarModelPropertyReq",
+                        "name": "Request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.CreateCarModelPropertyReq"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/v1/car-model-property/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Get a CarModelProperty",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "CarModelProperty"
+                ],
+                "summary": "Get a CarModelProperty",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            },
+            "put": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Update CarModelProperty",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "CarModelProperty"
+                ],
+                "summary": "Update CarModelProperty",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "UpdateCarModelPropertyReq",
+                        "name": "Request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.UpdateCarModelPropertyReq"
+                        }
+                    }
+                ],
+                "responses": {}
+            },
+            "delete": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "delete CarModelProperty",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "CarModelProperty"
+                ],
+                "summary": "delete CarModelProperty",
                 "parameters": [
                     {
                         "type": "integer",
@@ -2017,6 +2271,25 @@ const docTemplate = `{
                 }
             }
         },
+        "dto.CreateCarModelCommentReq": {
+            "type": "object",
+            "required": [
+                "carModelId",
+                "message"
+            ],
+            "properties": {
+                "carModelId": {
+                    "type": "integer"
+                },
+                "message": {
+                    "type": "string",
+                    "maxLength": 100
+                },
+                "userId": {
+                    "type": "integer"
+                }
+            }
+        },
         "dto.CreateCarModelImageReq": {
             "type": "object",
             "required": [
@@ -2051,6 +2324,26 @@ const docTemplate = `{
                 },
                 "priceAt": {
                     "type": "string"
+                }
+            }
+        },
+        "dto.CreateCarModelPropertyReq": {
+            "type": "object",
+            "required": [
+                "carModelId",
+                "propertyId",
+                "value"
+            ],
+            "properties": {
+                "carModelId": {
+                    "type": "integer"
+                },
+                "propertyId": {
+                    "type": "integer"
+                },
+                "value": {
+                    "type": "string",
+                    "maxLength": 100
                 }
             }
         },
@@ -2323,6 +2616,18 @@ const docTemplate = `{
                 }
             }
         },
+        "dto.UpdateCarModelCommentReq": {
+            "type": "object",
+            "required": [
+                "message"
+            ],
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "maxLength": 100
+                }
+            }
+        },
         "dto.UpdateCarModelImageReq": {
             "type": "object",
             "properties": {
@@ -2339,6 +2644,18 @@ const docTemplate = `{
                 },
                 "priceAt": {
                     "type": "string"
+                }
+            }
+        },
+        "dto.UpdateCarModelPropertyReq": {
+            "type": "object",
+            "required": [
+                "value"
+            ],
+            "properties": {
+                "value": {
+                    "type": "string",
+                    "maxLength": 100
                 }
             }
         },

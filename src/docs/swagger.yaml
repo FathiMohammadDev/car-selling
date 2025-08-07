@@ -9,6 +9,18 @@ definitions:
     - carModelId
     - colorId
     type: object
+  dto.CreateCarModelImageReq:
+    properties:
+      carModelId:
+        type: integer
+      imageId:
+        type: integer
+      isMainImage:
+        type: boolean
+    required:
+    - carModelId
+    - imageId
+    type: object
   dto.CreateCarModelPriceHistoryReq:
     properties:
       carModelYearId:
@@ -212,6 +224,11 @@ definitions:
       colorId:
         type: integer
     type: object
+  dto.UpdateCarModelImageReq:
+    properties:
+      isMainImage:
+        type: boolean
+    type: object
   dto.UpdateCarModelPriceHistoryReq:
     properties:
       price:
@@ -412,6 +429,87 @@ paths:
       summary: Update CarModelColor
       tags:
       - CarModelColor
+  /v1/car-model-image/:
+    post:
+      consumes:
+      - application/json
+      description: Create new CarModelImage
+      parameters:
+      - description: CreateCarModelImageReq
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateCarModelImageReq'
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: Create new CarModelImage
+      tags:
+      - CarModelImage
+  /v1/car-model-image/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: delete CarModelImage
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: delete CarModelImage
+      tags:
+      - CarModelImage
+    get:
+      consumes:
+      - application/json
+      description: Get a CarModelImage
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: Get a CarModelImage
+      tags:
+      - CarModelImage
+    put:
+      consumes:
+      - application/json
+      description: Update CarModelImage
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: UpdateCarModelImageReq
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UpdateCarModelImageReq'
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - AuthBearer: []
+      summary: Update CarModelImage
+      tags:
+      - CarModelImage
   /v1/car-model-price-history/:
     post:
       consumes:

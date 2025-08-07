@@ -32,6 +32,7 @@ func registerRoutes(r *gin.Engine, cfg *config.Config) {
 	v1 := r.Group("/api/v1/")
 	{
 		users := v1.Group("/users")
+		carModelImage := v1.Group("/car-model-image", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
 		carModelPriceHistory := v1.Group("/car-model-price-history", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
 		carModelYear := v1.Group("/car-model-year", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
 		year := v1.Group("/year", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
@@ -49,6 +50,7 @@ func registerRoutes(r *gin.Engine, cfg *config.Config) {
 
 		routers.Year(year, cfg)
 		routers.Color(color, cfg)
+		routers.CarModelImage(carModelImage, cfg)
 		routers.CarModelPriceHistory(carModelPriceHistory, cfg)
 		routers.CarModelColor(carModelColor, cfg)
 		routers.CarModelYear(carModelYear, cfg)
@@ -62,6 +64,9 @@ func registerRoutes(r *gin.Engine, cfg *config.Config) {
 		routers.City(city, cfg)
 		routers.Country(country, cfg)
 		routers.Users(users, cfg)
+
+
+		r.Static("/static", "./uploads")
 	}
 
 }
